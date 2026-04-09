@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>HIPAA Notice of Privacy Practices — Pepvori</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Outfit',sans-serif;background:#fff;color:#0d2137;overflow-x:hidden;font-size:14px;}
+.s{font-family:'Cormorant Garamond',serif;}
+a{text-decoration:none;color:#0f9d8c;}
+a:hover{text-decoration:underline;}
+.nav-link{color:#3d5a73;font-size:13px;font-weight:500;letter-spacing:0.04em;text-decoration:none;position:relative;padding-bottom:2px;transition:color .2s;}
+.nav-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1.5px;background:#0f9d8c;border-radius:2px;transition:width .35s ease-in-out;}
+.nav-link:hover{color:#0d2137;}.nav-link:hover::after{width:100%;}
+.nav-btn{background:#0f9d8c;color:#fff;border:none;padding:9px 22px;border-radius:4px;font-size:13px;font-weight:600;cursor:pointer;transition:background .4s,box-shadow .4s;}
+.nav-btn:hover{background:#0b8578;box-shadow:0 6px 20px rgba(15,157,140,.35);}
+.prose h2{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;color:#0d2137;margin:40px 0 12px;}
+.prose h3{font-size:15px;font-weight:600;color:#0d2137;margin:24px 0 8px;}
+.prose p{font-size:14px;color:#3d5a73;line-height:1.85;margin-bottom:14px;}
+.prose ul{margin:0 0 14px 20px;display:flex;flex-direction:column;gap:6px;}
+.prose ul li{font-size:14px;color:#3d5a73;line-height:1.7;}
+.toc-link{display:block;font-size:13px;color:#7a9bb0;padding:7px 0;border-bottom:1px solid #f0f4f7;transition:color .2s;text-decoration:none;}
+.toc-link:hover{color:#0f9d8c;text-decoration:none;}
+.toc-link.active{color:#0f9d8c;font-weight:600;}
+@media(max-width:768px){
+  nav{padding:0 20px !important;}
+  .hero-pad{padding:56px 24px 44px !important;}
+  .legal-body{grid-template-columns:1fr !important;padding:40px 24px !important;}
+  .toc-sidebar{display:none !important;}
+  footer{padding:48px 24px 32px !important;}
+  .footer-grid{grid-template-columns:1fr 1fr !important;gap:32px !important;}
+}
+</style>
+</head>
+<body>
+
+<nav style="position:sticky;top:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 56px;background:rgba(255,255,255,.97);border-bottom:1px solid #dde6ed;backdrop-filter:blur(16px);">
+  <a href="pepvori_landing_page_preview.html" style="text-decoration:none;">
+    <span class="s" style="font-size:22px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#0d2137;">PEP<span style="color:#0f9d8c">VORI</span></span>
+  </a>
+  <div style="display:flex;gap:28px;align-items:center;">
+    <a href="pepvori_protocols.html" class="nav-link">Protocols</a>
+    <a href="pepvori_how_it_works.html" class="nav-link">How It Works</a>
+    <a href="pepvori_pricing.html" class="nav-link">Pricing</a>
+    <button class="nav-btn" onclick="window.location.href='pepvori_intake.html'">Begin Intake</button>
+  </div>
+</nav>
+
+<div style="padding:16px 56px;background:#fff;border-bottom:1px solid #dde6ed;">
+  <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:8px;">
+    <a href="pepvori_landing_page_preview.html" style="font-size:13px;color:#7a9bb0;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#0f9d8c'" onmouseout="this.style.color='#7a9bb0'">Home</a>
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#dde6ed" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+    <span style="font-size:13px;color:#0d2137;font-weight:500;">HIPAA Notice</span>
+  </div>
+</div>
+
+<div style="background:#0d2137;">
+  <div class="hero-pad" style="max-width:800px;margin:0 auto;padding:64px 56px 52px;">
+    <h1 class="s" style="font-size:50px;font-weight:300;line-height:1.05;color:#fff;margin-bottom:14px;">HIPAA Notice of<br/><em style="color:#b3e0db;">Privacy Practices</em></h1>
+    <p style="font-size:14px;color:rgba(255,255,255,.38);line-height:1.7;">Last updated: January 15, 2026 &nbsp;·&nbsp; Effective: January 15, 2026</p>
+  </div>
+</div>
+
+<div class="legal-body" style="display:grid;grid-template-columns:220px 1fr;gap:56px;max-width:1080px;margin:0 auto;padding:64px 56px 96px;align-items:start;">
+
+  <div class="toc-sidebar" style="position:sticky;top:84px;">
+    <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#b3c5d2;margin-bottom:12px;">On this page</div>
+    <a href="#overview" class="toc-link">Overview</a>
+    <a href="#phi" class="toc-link">Protected health info</a>
+    <a href="#uses" class="toc-link">How we use PHI</a>
+    <a href="#disclosures" class="toc-link">Disclosures</a>
+    <a href="#rights" class="toc-link">Your rights</a>
+    <a href="#obligations" class="toc-link">Our obligations</a>
+    <a href="#breach" class="toc-link">Breach notification</a>
+    <a href="#complaints" class="toc-link">Complaints</a>
+    <a href="#contact" class="toc-link">Contact</a>
+    <div style="margin-top:24px;padding-top:20px;border-top:1px solid #dde6ed;">
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#b3c5d2;margin-bottom:12px;">Related</div>
+      <a href="pepvori_privacy.html" class="toc-link">Privacy Policy</a>
+      <a href="pepvori_terms.html" class="toc-link">Terms of Service</a>
+      <a href="pepvori_medical_consent.html" class="toc-link">Medical Consent</a>
+    </div>
+  </div>
+
+  <div class="prose">
+
+    <div id="overview" style="background:#f7f9fb;border:1px solid #dde6ed;border-left:3px solid #0f9d8c;border-radius:0 8px 8px 0;padding:20px 24px;margin-bottom:32px;">
+      <p style="margin:0;font-size:13px;color:#3d5a73;line-height:1.7;"><strong style="color:#0d2137;">Summary:</strong> This notice describes how your Protected Health Information (PHI) may be used and disclosed, and how you can access it. We are required by law to maintain the privacy of your PHI and to provide you with this notice. Your PHI will never be sold to third parties or used for advertising.</p>
+    </div>
+
+    <h2 id="phi">1. What is Protected Health Information?</h2>
+    <p>Protected Health Information (PHI) is information about you — including demographic data — that relates to your past, present, or future physical or mental health or condition, the provision of healthcare to you, or the past, present, or future payment for the provision of healthcare to you, and that identifies you or for which there is a reasonable basis to believe it can be used to identify you.</p>
+    <p>To the extent Pepvori functions as a Business Associate of covered healthcare providers (the independent licensed physicians in our network), Pepvori handles PHI in accordance with HIPAA and applicable Business Associate Agreement obligations.</p>
+
+    <h2 id="uses">2. How we use your PHI</h2>
+    <h3>Treatment</h3>
+    <p>We use and disclose PHI for treatment purposes — for example, sharing your intake information with your assigned physician so they can evaluate your health status and determine whether a protocol is appropriate for you.</p>
+    <h3>Payment</h3>
+    <p>We may use and disclose PHI in connection with payment activities, including billing for membership and medications, processing insurance claims if applicable, and verifying coverage.</p>
+    <h3>Healthcare operations</h3>
+    <p>We may use and disclose PHI for our internal healthcare operations, including quality assessment, training, compliance activities, and improving our services.</p>
+
+    <h2 id="disclosures">3. Disclosures</h2>
+    <p>We may disclose your PHI in the following circumstances without your specific authorization:</p>
+    <ul>
+      <li><strong>As required by law:</strong> When required by federal, state, or local law</li>
+      <li><strong>Public health activities:</strong> To authorized public health authorities for disease reporting, injury, or disability tracking</li>
+      <li><strong>Law enforcement:</strong> In response to a court order, warrant, or other lawful process</li>
+      <li><strong>Health oversight:</strong> To government agencies for audits, investigations, or licensure inspections</li>
+      <li><strong>Serious threat:</strong> To prevent or lessen a serious and imminent threat to a person or the public</li>
+    </ul>
+    <p>All other disclosures of your PHI require your written authorization, which you may revoke at any time by contacting us in writing.</p>
+
+    <h2 id="rights">4. Your rights regarding your PHI</h2>
+    <h3>Right to access</h3>
+    <p>You have the right to inspect and obtain a copy of your PHI that we maintain, with limited exceptions. Requests may be submitted in writing to our Privacy Officer.</p>
+    <h3>Right to amend</h3>
+    <p>You have the right to request an amendment to your PHI if you believe it is incorrect or incomplete. We may deny the request under certain circumstances, and will explain the reason in writing.</p>
+    <h3>Right to an accounting of disclosures</h3>
+    <p>You have the right to receive a list of certain disclosures we have made of your PHI. This does not include disclosures for treatment, payment, or healthcare operations.</p>
+    <h3>Right to request restrictions</h3>
+    <p>You have the right to request restrictions on certain uses and disclosures of your PHI. We are not required to agree to all requested restrictions, but will comply with any restriction you request regarding disclosure to a health plan for payment or healthcare operations when you have paid for the service out-of-pocket.</p>
+    <h3>Right to confidential communications</h3>
+    <p>You have the right to request that we communicate with you about your PHI in a specific way or at a specific location. We will accommodate reasonable requests.</p>
+    <h3>Right to a paper copy</h3>
+    <p>You have the right to a paper copy of this notice upon request, even if you have agreed to receive it electronically.</p>
+
+    <h2 id="obligations">5. Our obligations</h2>
+    <p>Pepvori is required to:</p>
+    <ul>
+      <li>Maintain the privacy of your PHI</li>
+      <li>Provide you with notice of our legal duties and privacy practices with respect to PHI</li>
+      <li>Abide by the terms of the notice currently in effect</li>
+      <li>Notify you following a breach of unsecured PHI</li>
+    </ul>
+    <p>We reserve the right to change our privacy practices and to make the new practices effective for all PHI we maintain. We will post the revised notice on our website and make it available upon request.</p>
+
+    <h2 id="breach">6. Breach notification</h2>
+    <p>In the event of a breach of unsecured PHI, we will notify affected individuals without unreasonable delay and within 60 days of discovery. Notification will include a description of the breach, the types of information involved, steps you should take, what we are doing to investigate and mitigate the breach, and contact information for further questions.</p>
+
+    <h2 id="complaints">7. Complaints</h2>
+    <p>If you believe your privacy rights have been violated, you may file a complaint with Pepvori or with the U.S. Department of Health and Human Services Office for Civil Rights. To file a complaint with Pepvori, contact our Privacy Officer in writing. We will not retaliate against you for filing a complaint.</p>
+    <p><strong>U.S. Department of Health and Human Services:</strong><br/>200 Independence Avenue, S.W., Washington, D.C. 20201 | <a href="https://www.hhs.gov/hipaa" target="_blank">hhs.gov/hipaa</a></p>
+
+    <h2 id="contact">8. Contact our Privacy Officer</h2>
+    <p>For questions about this notice or to exercise your rights, please contact:</p>
+    <div style="background:#f7f9fb;border:1px solid #dde6ed;border-radius:8px;padding:20px 24px;margin-top:8px;">
+      <p style="margin-bottom:4px;"><strong>Privacy Officer, Pepvori Health, Inc.</strong></p>
+      <p style="margin-bottom:4px;">Email: <a href="mailto:privacy@pepvori.com">privacy@pepvori.com</a></p>
+      <p style="margin:0;">Or via our <a href="pepvori_contact.html">contact form</a> — select "General inquiry."</p>
+    </div>
+
+    <div style="margin-top:40px;padding-top:32px;border-top:1px solid #dde6ed;display:flex;gap:12px;flex-wrap:wrap;">
+      <a href="pepvori_privacy.html" style="display:inline-flex;align-items:center;gap:6px;background:#f7f9fb;border:1px solid #dde6ed;border-radius:6px;padding:10px 16px;font-size:13px;color:#3d5a73;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='#b3e0db'" onmouseout="this.style.borderColor='#dde6ed'">Privacy Policy →</a>
+      <a href="pepvori_terms.html" style="display:inline-flex;align-items:center;gap:6px;background:#f7f9fb;border:1px solid #dde6ed;border-radius:6px;padding:10px 16px;font-size:13px;color:#3d5a73;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='#b3e0db'" onmouseout="this.style.borderColor='#dde6ed'">Terms of Service →</a>
+      <a href="pepvori_medical_consent.html" style="display:inline-flex;align-items:center;gap:6px;background:#f7f9fb;border:1px solid #dde6ed;border-radius:6px;padding:10px 16px;font-size:13px;color:#3d5a73;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='#b3e0db'" onmouseout="this.style.borderColor='#dde6ed'">Medical Consent →</a>
+    </div>
+  </div>
+</div>
+
+<footer style="background:#09192a;padding:60px 56px 40px;">
+  <div class="footer-grid" style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:44px;margin-bottom:40px;">
+    <div>
+      <a href="pepvori_landing_page_preview.html" style="text-decoration:none;"><div class="s" style="font-size:20px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#fff;margin-bottom:12px;">PEP<span style="color:#0f9d8c">VORI</span></div></a>
+      <p style="font-size:13px;color:rgba(255,255,255,.3);line-height:1.8;max-width:200px;">Physician-guided peptide therapy. Personalized protocols built around your biology.</p>
+    </div>
+    <div>
+      <div style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,.26);margin-bottom:14px;">Protocols</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="pepvori_protocol_recovery.html" style="color:rgba(255,255,255,.42);font-size:13px;">Recovery & Repair</a>
+        <a href="pepvori_protocol_growth.html" style="color:rgba(255,255,255,.42);font-size:13px;">Growth & Strength</a>
+        <a href="pepvori_protocol_longevity.html" style="color:rgba(255,255,255,.42);font-size:13px;">Longevity Protocol</a>
+        <a href="pepvori_protocol_sleep.html" style="color:rgba(255,255,255,.42);font-size:13px;">Focus & Sleep</a>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,.26);margin-bottom:14px;">Company</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="pepvori_about.html" style="color:rgba(255,255,255,.42);font-size:13px;">About</a>
+        <a href="pepvori_physicians.html" style="color:rgba(255,255,255,.42);font-size:13px;">Our Physicians</a>
+        <span style="color:rgba(255,255,255,.2);font-size:13px;cursor:default;">Journal</span>
+        <a href="pepvori_contact.html" style="color:rgba(255,255,255,.42);font-size:13px;">Contact</a>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,.26);margin-bottom:14px;">Legal</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="pepvori_privacy.html" style="color:rgba(255,255,255,.42);font-size:13px;">Privacy Policy</a>
+        <a href="pepvori_terms.html" style="color:rgba(255,255,255,.42);font-size:13px;">Terms of Service</a>
+        <a href="pepvori_medical_consent.html" style="color:rgba(255,255,255,.42);font-size:13px;">Medical Consent</a>
+        <a href="pepvori_hipaa.html" style="color:#0f9d8c;font-size:13px;font-weight:500;">HIPAA Notice</a>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:space-between;padding-top:22px;border-top:1px solid rgba(255,255,255,.07);font-size:12px;color:rgba(255,255,255,.2);flex-wrap:wrap;gap:8px;">
+    <span>© 2026 Pepvori. All rights reserved.</span>
+    <span>Precision peptide therapy, delivered.</span>
+  </div>
+  <div style="font-size:11px;color:rgba(255,255,255,.14);max-width:700px;margin-top:16px;line-height:1.7;padding-top:16px;border-top:1px solid rgba(255,255,255,.05);">* Compounded medications are not FDA-approved. Prescriptions issued only after consultation with an independent licensed physician. Results may vary. All medical care provided by independent licensed providers.</div>
+</footer>
+
+<script>
+const tocLinks = document.querySelectorAll('.toc-link');
+const sectionIds = [...tocLinks].map(l => l.getAttribute('href').replace('#','')).filter(id => document.getElementById(id));
+function updateActive() {
+  const scrollY = window.scrollY + 120;
+  let current = sectionIds[0];
+  sectionIds.forEach(id => { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top + window.scrollY <= scrollY) current = id; });
+  tocLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+}
+window.addEventListener('scroll', updateActive, {passive:true});
+updateActive();
+</script>
+</body>
+</html>

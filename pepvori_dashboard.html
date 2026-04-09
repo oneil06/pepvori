@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Patient Portal — Pepvori</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:'Outfit',sans-serif;background:#f0f4f7;color:#0d2137;font-size:14px;}
+.s{font-family:'Cormorant Garamond',serif;}
+a{text-decoration:none;color:inherit;}
+
+/* ─── LAYOUT ─── */
+.app{display:flex;height:100vh;overflow:hidden;}
+
+/* Sidebar — desktop */
+.sidebar{width:240px;background:#0d2137;display:flex;flex-direction:column;flex-shrink:0;height:100vh;position:fixed;left:0;top:0;z-index:100;}
+.sidebar-logo{padding:24px 24px 20px;border-bottom:1px solid rgba(255,255,255,.08);}
+.sidebar-patient{padding:20px 24px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:12px;}
+.avatar{width:38px;height:38px;border-radius:50%;background:#0f9d8c;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;color:#fff;flex-shrink:0;}
+.sidebar-nav{flex:1;padding:12px 12px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:8px;cursor:pointer;transition:background .2s;color:rgba(255,255,255,.5);font-size:13px;font-weight:500;border:none;background:transparent;width:100%;text-align:left;}
+.nav-item:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.8);}
+.nav-item.active{background:rgba(15,157,140,.15);color:#fff;}
+.nav-item.active svg{stroke:#0f9d8c;}
+.nav-item svg{flex-shrink:0;}
+.sidebar-footer{padding:16px 24px;border-top:1px solid rgba(255,255,255,.08);}
+
+/* Main content */
+.main{margin-left:240px;flex:1;height:100vh;overflow-y:auto;display:flex;flex-direction:column;}
+.main-header{padding:20px 32px;background:#fff;border-bottom:1px solid #dde6ed;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.main-content{flex:1;padding:28px 32px 40px;}
+
+/* Tab panels */
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* Cards */
+.card{background:#fff;border:1px solid #dde6ed;border-radius:12px;padding:24px;}
+.card-sm{background:#fff;border:1px solid #dde6ed;border-radius:12px;padding:18px 20px;}
+
+/* Grid layouts */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.grid-main{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start;}
+
+/* Stat mini */
+.stat-mini{background:#f7f9fb;border:1px solid #dde6ed;border-radius:8px;padding:16px;}
+
+/* Badges */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600;}
+.badge-green{background:#e6f5f3;color:#0b8578;}
+.badge-navy{background:#e8edf2;color:#0d2137;}
+.badge-amber{background:#fef3e2;color:#b45309;}
+
+/* Shipment tracker */
+.track-step{display:flex;align-items:flex-start;gap:14px;position:relative;}
+.track-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1;}
+.track-line{position:absolute;left:13px;top:28px;width:2px;height:calc(100% + 16px);background:#dde6ed;}
+.track-line.done{background:#0f9d8c;}
+
+/* Progress rating */
+.rating-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #f0f4f7;}
+.rating-row:last-child{border-bottom:none;}
+.rating-dots{display:flex;gap:6px;}
+.rdot{width:28px;height:28px;border-radius:6px;border:1.5px solid #dde6ed;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#7a9bb0;transition:all .2s;}
+.rdot:hover{border-color:#0f9d8c;color:#0f9d8c;}
+.rdot.active{background:#0f9d8c;border-color:#0f9d8c;color:#fff;}
+
+/* Buttons */
+.btn-primary{background:#0f9d8c;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;transition:background .3s,box-shadow .3s;font-family:'Outfit',sans-serif;}
+.btn-primary:hover{background:#0b8578;box-shadow:0 4px 16px rgba(15,157,140,.3);}
+.btn-outline{background:transparent;color:#0d2137;border:1.5px solid #dde6ed;padding:12px 24px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;transition:all .3s;font-family:'Outfit',sans-serif;}
+.btn-outline:hover{border-color:#0f9d8c;color:#0f9d8c;}
+.btn-danger{background:transparent;color:#dc2626;border:1.5px solid #fca5a5;padding:12px 24px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;transition:all .3s;font-family:'Outfit',sans-serif;}
+.btn-danger:hover{background:#fef2f2;}
+
+/* Weekly chart bars */
+.bar-wrap{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;}
+.bar-track{width:100%;background:#f0f4f7;border-radius:4px;height:80px;display:flex;align-items:flex-end;overflow:hidden;}
+.bar-fill{width:100%;background:linear-gradient(to top,#0f9d8c,#b3e0db);border-radius:4px 4px 0 0;transition:height .6s ease;}
+
+/* ─── MOBILE ─── */
+/* Bottom nav — mobile only */
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #dde6ed;z-index:200;padding:8px 0 calc(8px + env(safe-area-inset-bottom));flex-direction:row;}
+.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 4px;cursor:pointer;border:none;background:transparent;color:#7a9bb0;transition:color .2s;}
+.bn-item.active{color:#0f9d8c;}
+.bn-item span{font-size:10px;font-weight:600;font-family:'Outfit',sans-serif;}
+
+@media (max-width: 768px) {
+  .sidebar{display:none;}
+  .main{margin-left:0;}
+  .main-header{padding:16px 20px;}
+  .main-content{padding:16px 16px 100px;}
+  .grid-2{grid-template-columns:1fr;}
+  .grid-3{grid-template-columns:1fr;}
+  .grid-main{grid-template-columns:1fr;}
+  .bottom-nav{display:flex;}
+  .card{padding:18px;}
+  .desktop-only{display:none;}
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .sidebar{width:200px;}
+  .main{margin-left:200px;}
+  .main-content{padding:20px 24px 40px;}
+  .grid-main{grid-template-columns:1fr 300px;}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+<!-- ─── SIDEBAR (desktop) ─── -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <a href="pepvori_landing_page_preview.html">
+      <span class="s" style="font-size:20px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#fff;">PEP<span style="color:#0f9d8c">VORI</span></span>
+    </a>
+  </div>
+  <div class="sidebar-patient">
+    <div class="avatar">MR</div>
+    <div>
+      <div style="font-size:13px;font-weight:600;color:#fff;">Marcus R.</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:1px;">Accelerate Plan</div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <button class="nav-item active" onclick="showTab('overview',this)">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/></svg>
+      Overview
+    </button>
+    <button class="nav-item" onclick="showTab('protocol',this)">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714a2.25 2.25 0 001.357 2.065L19.5 12"/></svg>
+      Protocol
+    </button>
+    <button class="nav-item" onclick="showTab('checkin',this)">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
+      Check-in
+    </button>
+    <button class="nav-item" onclick="showTab('progress',this)">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"/></svg>
+      Progress
+    </button>
+    <button class="nav-item" onclick="showTab('account',this)">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+      Account
+    </button>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="pepvori_landing_page_preview.html" style="display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.35);font-size:12px;transition:color .2s;" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"/></svg>
+      Sign out
+    </a>
+  </div>
+</aside>
+
+<!-- ─── MAIN ─── -->
+<main class="main">
+
+  <!-- Header -->
+  <div class="main-header">
+    <div>
+      <div style="font-size:11px;color:#7a9bb0;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;" id="tab-breadcrumb">Overview</div>
+      <div style="font-size:18px;font-weight:600;color:#0d2137;margin-top:1px;" id="tab-title">Good morning, Marcus</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="badge badge-green">
+        <div style="width:6px;height:6px;background:#0f9d8c;border-radius:50%;"></div>
+        Protocol active
+      </div>
+      <div class="avatar desktop-only" style="cursor:pointer;">MR</div>
+    </div>
+  </div>
+
+  <div class="main-content">
+
+    <!-- ══════════════════════════════ -->
+    <!-- TAB 1: OVERVIEW               -->
+    <!-- ══════════════════════════════ -->
+    <div class="tab-panel active" id="tab-overview">
+
+      <!-- Top stat row -->
+      <div class="grid-3" style="margin-bottom:20px;">
+        <div class="stat-mini">
+          <div style="font-size:11px;color:#7a9bb0;margin-bottom:6px;">Protocol day</div>
+          <div class="s" style="font-size:28px;font-weight:400;color:#0f9d8c;line-height:1;">34</div>
+          <div style="font-size:11px;color:#7a9bb0;margin-top:3px;">of 84 day cycle</div>
+        </div>
+        <div class="stat-mini">
+          <div style="font-size:11px;color:#7a9bb0;margin-bottom:6px;">Next shipment</div>
+          <div class="s" style="font-size:28px;font-weight:400;color:#0d2137;line-height:1;">12</div>
+          <div style="font-size:11px;color:#7a9bb0;margin-top:3px;">days away</div>
+        </div>
+        <div class="stat-mini">
+          <div style="font-size:11px;color:#7a9bb0;margin-bottom:6px;">Next check-in</div>
+          <div class="s" style="font-size:28px;font-weight:400;color:#0d2137;line-height:1;">Apr 18</div>
+          <div style="font-size:11px;color:#7a9bb0;margin-top:3px;">Dr. Sarah Chen</div>
+        </div>
+      </div>
+
+      <!-- Main grid -->
+      <div class="grid-main">
+        <div style="display:flex;flex-direction:column;gap:20px;">
+
+          <!-- Active protocol card -->
+          <div class="card">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+              <div>
+                <div style="font-size:11px;font-weight:600;color:#0f9d8c;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;">Active protocol</div>
+                <div class="s" style="font-size:22px;font-weight:500;color:#0d2137;">Recovery & Repair</div>
+              </div>
+              <span class="badge badge-green">Active</span>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;">
+              <span style="background:#e6f5f3;border:1px solid #b3e0db;border-radius:100px;padding:3px 12px;font-size:12px;color:#0b8578;font-weight:500;">BPC-157</span>
+              <span style="background:#e6f5f3;border:1px solid #b3e0db;border-radius:100px;padding:3px 12px;font-size:12px;color:#0b8578;font-weight:500;">TB-500</span>
+              <span style="background:#e6f5f3;border:1px solid #b3e0db;border-radius:100px;padding:3px 12px;font-size:12px;color:#0b8578;font-weight:500;">GHK-Cu</span>
+            </div>
+            <!-- Cycle progress bar -->
+            <div style="margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;">
+              <div style="font-size:12px;color:#7a9bb0;">Cycle progress</div>
+              <div style="font-size:12px;font-weight:600;color:#0d2137;">Day 34 of 84</div>
+            </div>
+            <div style="height:8px;background:#f0f4f7;border-radius:4px;overflow:hidden;">
+              <div style="height:100%;width:40%;background:linear-gradient(90deg,#0f9d8c,#b3e0db);border-radius:4px;"></div>
+            </div>
+            <div style="margin-top:14px;display:flex;justify-content:flex-end;">
+              <button class="btn-outline" style="font-size:12px;padding:8px 16px;" onclick="showTab('protocol',null)">View protocol details →</button>
+            </div>
+          </div>
+
+          <!-- Shipment tracker -->
+          <div class="card">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+              <div style="font-size:15px;font-weight:600;color:#0d2137;">Current shipment</div>
+              <span class="badge badge-amber">In transit</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:0;position:relative;">
+              <div class="track-step" style="padding-bottom:20px;">
+                <div class="track-line done"></div>
+                <div class="track-dot" style="background:#0f9d8c;">
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M4.5 8l2.5 2.5 4.5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div style="padding-top:3px;">
+                  <div style="font-size:13px;font-weight:600;color:#0d2137;">Prescription received</div>
+                  <div style="font-size:11px;color:#7a9bb0;margin-top:2px;">Apr 1 · 2:14 PM</div>
+                </div>
+              </div>
+              <div class="track-step" style="padding-bottom:20px;">
+                <div class="track-line done"></div>
+                <div class="track-dot" style="background:#0f9d8c;">
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M4.5 8l2.5 2.5 4.5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div style="padding-top:3px;">
+                  <div style="font-size:13px;font-weight:600;color:#0d2137;">Compounding complete</div>
+                  <div style="font-size:11px;color:#7a9bb0;margin-top:2px;">Apr 2 · 9:30 AM</div>
+                </div>
+              </div>
+              <div class="track-step" style="padding-bottom:20px;">
+                <div class="track-line"></div>
+                <div class="track-dot" style="background:#e6f5f3;border:2px solid #0f9d8c;">
+                  <div style="width:8px;height:8px;background:#0f9d8c;border-radius:50%;"></div>
+                </div>
+                <div style="padding-top:3px;">
+                  <div style="font-size:13px;font-weight:600;color:#0f9d8c;">Shipped — in transit</div>
+                  <div style="font-size:11px;color:#7a9bb0;margin-top:2px;">Apr 3 · Est. delivery Apr 8</div>
+                </div>
+              </div>
+              <div class="track-step">
+                <div class="track-dot" style="background:#f0f4f7;border:1.5px solid #dde6ed;"></div>
+                <div style="padding-top:3px;">
+                  <div style="font-size:13px;font-weight:500;color:#7a9bb0;">Delivered</div>
+                  <div style="font-size:11px;color:#b3e0db;margin-top:2px;">Estimated Apr 8</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right column -->
+        <div style="display:flex;flex-direction:column;gap:20px;">
+
+          <!-- Next check-in -->
+          <div class="card">
+            <div style="font-size:11px;font-weight:600;color:#0f9d8c;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px;">Next check-in</div>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+              <div style="width:44px;height:44px;background:#e6f5f3;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+              </div>
+              <div>
+                <div style="font-size:14px;font-weight:600;color:#0d2137;">Dr. Sarah Chen</div>
+                <div style="font-size:12px;color:#7a9bb0;margin-top:2px;">Board-certified, Functional Medicine</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
+              <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#3d5a73;">
+                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5"/></svg>
+                Friday, April 18 · 10:00 AM
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#3d5a73;">
+                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"/></svg>
+                Secure video consult
+              </div>
+            </div>
+            <button class="btn-primary" style="width:100%;font-size:13px;padding:10px;" onclick="showTab('checkin',null)">View details</button>
+          </div>
+
+          <!-- Last progress log -->
+          <div class="card">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+              <div style="font-size:11px;font-weight:600;color:#0f9d8c;letter-spacing:0.1em;text-transform:uppercase;">Last logged</div>
+              <div style="font-size:11px;color:#7a9bb0;">Apr 5</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;">
+                <div style="font-size:13px;color:#3d5a73;">Energy</div>
+                <div style="display:flex;gap:4px;">
+                  <div style="width:8px;height:8px;border-radius:2px;background:#0f9d8c;"></div>
+                  <div style="width:8px;height:8px;border-radius:2px;background:#0f9d8c;"></div>
+                  <div style="width:8px;height:8px;border-radius:2px;background:#0f9d8c;"></div>
+                  <div style="width:8px;height:8px;border-radius:2px;background:#0f9d8c;"></div>
+                  <div style="width:8px;height:8px;border-radius:2px;background:#dde6ed;"></div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;">
+                <div style="font-size:13px;color:#3d5a73;">Recovery</div>
+                <div style="display:flex;gap:4px;">
+                  <div style="width:8px;height:8px;border-radius:2px;background:#0f9d8c;"></div>
+                  <div style="width:8px;height:8px;border-radius:2px;background:#0f9d8c;"></div>
+                  <div style="width:8px;height:8px;border-radius:2px;background:#0f9d8c;"></div>
+                  <div style="width:8px;height:8px;border-radius:2px;background:#dde6ed;"></div>
+                  <div style="width:8px;height:8px;border-radius:2px;background:#dde6ed;"></div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;">
+                <div style="font-size:13px;color:#3d5a73;">Sleep</div>
+                <div style="display:flex;gap:4px;">
+                  <div style="width:8px;height:8px;border-radius:2px;background:#0f9d8c;"></div>
+                  <div style="width:8px;height:8px;border-radius:2px;background:#0f9d8c;"></div>
+                  <div style="width:8px;height:8px;border-radius:2px;background:#0f9d8c;"></div>
+                  <div style="width:8px;height:8px;border-radius:2px;background:#0f9d8c;"></div>
+                  <div style="width:8px;height:8px;border-radius:2px;background:#0f9d8c;"></div>
+                </div>
+              </div>
+            </div>
+            <button class="btn-outline" style="width:100%;font-size:12px;padding:9px;margin-top:14px;" onclick="showTab('progress',null)">Log today →</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════ -->
+    <!-- TAB 2: PROTOCOL               -->
+    <!-- ══════════════════════════════ -->
+    <div class="tab-panel" id="tab-protocol">
+      <div style="display:flex;flex-direction:column;gap:20px;">
+
+        <!-- Protocol overview -->
+        <div class="card">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;gap:12px;flex-wrap:wrap;">
+            <div>
+              <div style="font-size:11px;font-weight:600;color:#0f9d8c;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Active protocol</div>
+              <div class="s" style="font-size:28px;font-weight:400;color:#0d2137;">Recovery & Repair</div>
+              <div style="font-size:13px;color:#7a9bb0;margin-top:4px;">Prescribed by Dr. Sarah Chen · Apr 1, 2026</div>
+            </div>
+            <span class="badge badge-green" style="font-size:12px;padding:5px 12px;">Day 34 of 84</span>
+          </div>
+          <div style="height:10px;background:#f0f4f7;border-radius:5px;overflow:hidden;margin-bottom:8px;">
+            <div style="height:100%;width:40%;background:linear-gradient(90deg,#0f9d8c,#b3e0db);border-radius:5px;"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:#7a9bb0;margin-bottom:20px;">
+            <span>Started Apr 1</span><span>40% complete</span><span>Ends Jun 23</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+            <div class="stat-mini" style="text-align:center;">
+              <div style="font-size:11px;color:#7a9bb0;margin-bottom:4px;">Peptides</div>
+              <div style="font-size:18px;font-weight:700;color:#0d2137;">3</div>
+            </div>
+            <div class="stat-mini" style="text-align:center;">
+              <div style="font-size:11px;color:#7a9bb0;margin-bottom:4px;">Administration</div>
+              <div style="font-size:13px;font-weight:600;color:#0d2137;">SubQ</div>
+            </div>
+            <div class="stat-mini" style="text-align:center;">
+              <div style="font-size:11px;color:#7a9bb0;margin-bottom:4px;">Frequency</div>
+              <div style="font-size:13px;font-weight:600;color:#0d2137;">Daily</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Peptide cards -->
+        <div class="card">
+          <div style="font-size:13px;font-weight:600;color:#0d2137;margin-bottom:16px;">Your peptides</div>
+          <div style="display:flex;flex-direction:column;gap:0;">
+            <div style="padding:16px 0;border-bottom:1px solid #f0f4f7;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <span style="background:#e6f5f3;border:1px solid #b3e0db;border-radius:100px;padding:3px 12px;font-size:12px;color:#0b8578;font-weight:600;">BPC-157</span>
+                  <span style="font-size:12px;color:#7a9bb0;">Body Protection Compound</span>
+                </div>
+                <span class="badge badge-green">Primary</span>
+              </div>
+              <div style="font-size:13px;color:#3d5a73;line-height:1.6;">250mcg subcutaneous injection · Daily in the morning</div>
+            </div>
+            <div style="padding:16px 0;border-bottom:1px solid #f0f4f7;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <span style="background:#e6f5f3;border:1px solid #b3e0db;border-radius:100px;padding:3px 12px;font-size:12px;color:#0b8578;font-weight:600;">TB-500</span>
+                  <span style="font-size:12px;color:#7a9bb0;">Thymosin Beta-4</span>
+                </div>
+              </div>
+              <div style="font-size:13px;color:#3d5a73;line-height:1.6;">2.5mg subcutaneous injection · 2× per week</div>
+            </div>
+            <div style="padding:16px 0;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <span style="background:#e6f5f3;border:1px solid #b3e0db;border-radius:100px;padding:3px 12px;font-size:12px;color:#0b8578;font-weight:600;">GHK-Cu</span>
+                  <span style="font-size:12px;color:#7a9bb0;">Copper Peptide</span>
+                </div>
+              </div>
+              <div style="font-size:13px;color:#3d5a73;line-height:1.6;">1mg subcutaneous injection · Daily at night</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Administration schedule -->
+        <div class="card">
+          <div style="font-size:13px;font-weight:600;color:#0d2137;margin-bottom:16px;">Weekly schedule</div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;">
+            <div style="font-size:11px;color:#7a9bb0;padding-bottom:8px;">Mon</div>
+            <div style="font-size:11px;color:#7a9bb0;padding-bottom:8px;">Tue</div>
+            <div style="font-size:11px;color:#7a9bb0;padding-bottom:8px;">Wed</div>
+            <div style="font-size:11px;color:#7a9bb0;padding-bottom:8px;">Thu</div>
+            <div style="font-size:11px;color:#7a9bb0;padding-bottom:8px;">Fri</div>
+            <div style="font-size:11px;color:#7a9bb0;padding-bottom:8px;">Sat</div>
+            <div style="font-size:11px;color:#7a9bb0;padding-bottom:8px;">Sun</div>
+            <!-- BPC row -->
+            <div style="background:#e6f5f3;border-radius:4px;padding:6px 2px;font-size:10px;font-weight:600;color:#0b8578;">BPC</div>
+            <div style="background:#e6f5f3;border-radius:4px;padding:6px 2px;font-size:10px;font-weight:600;color:#0b8578;">BPC</div>
+            <div style="background:#e6f5f3;border-radius:4px;padding:6px 2px;font-size:10px;font-weight:600;color:#0b8578;">BPC</div>
+            <div style="background:#e6f5f3;border-radius:4px;padding:6px 2px;font-size:10px;font-weight:600;color:#0b8578;">BPC</div>
+            <div style="background:#e6f5f3;border-radius:4px;padding:6px 2px;font-size:10px;font-weight:600;color:#0b8578;">BPC</div>
+            <div style="background:#e6f5f3;border-radius:4px;padding:6px 2px;font-size:10px;font-weight:600;color:#0b8578;">BPC</div>
+            <div style="background:#e6f5f3;border-radius:4px;padding:6px 2px;font-size:10px;font-weight:600;color:#0b8578;">BPC</div>
+            <!-- TB-500 row -->
+            <div style="background:#e6f5f3;border-radius:4px;padding:6px 2px;font-size:10px;font-weight:600;color:#0b8578;">TB5</div>
+            <div style="background:#f0f4f7;border-radius:4px;padding:6px 2px;font-size:10px;color:#dde6ed;">—</div>
+            <div style="background:#f0f4f7;border-radius:4px;padding:6px 2px;font-size:10px;color:#dde6ed;">—</div>
+            <div style="background:#e6f5f3;border-radius:4px;padding:6px 2px;font-size:10px;font-weight:600;color:#0b8578;">TB5</div>
+            <div style="background:#f0f4f7;border-radius:4px;padding:6px 2px;font-size:10px;color:#dde6ed;">—</div>
+            <div style="background:#f0f4f7;border-radius:4px;padding:6px 2px;font-size:10px;color:#dde6ed;">—</div>
+            <div style="background:#f0f4f7;border-radius:4px;padding:6px 2px;font-size:10px;color:#dde6ed;">—</div>
+            <!-- GHK row -->
+            <div style="background:#e6f5f3;border-radius:4px;padding:6px 2px;font-size:10px;font-weight:600;color:#0b8578;">GHK</div>
+            <div style="background:#e6f5f3;border-radius:4px;padding:6px 2px;font-size:10px;font-weight:600;color:#0b8578;">GHK</div>
+            <div style="background:#e6f5f3;border-radius:4px;padding:6px 2px;font-size:10px;font-weight:600;color:#0b8578;">GHK</div>
+            <div style="background:#e6f5f3;border-radius:4px;padding:6px 2px;font-size:10px;font-weight:600;color:#0b8578;">GHK</div>
+            <div style="background:#e6f5f3;border-radius:4px;padding:6px 2px;font-size:10px;font-weight:600;color:#0b8578;">GHK</div>
+            <div style="background:#e6f5f3;border-radius:4px;padding:6px 2px;font-size:10px;font-weight:600;color:#0b8578;">GHK</div>
+            <div style="background:#e6f5f3;border-radius:4px;padding:6px 2px;font-size:10px;font-weight:600;color:#0b8578;">GHK</div>
+          </div>
+        </div>
+
+        <div style="text-align:center;">
+          <a href="pepvori_protocol_recovery.html"><button class="btn-outline">View full protocol page →</button></a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════ -->
+    <!-- TAB 3: CHECK-IN               -->
+    <!-- ══════════════════════════════ -->
+    <div class="tab-panel" id="tab-checkin">
+      <div style="display:flex;flex-direction:column;gap:20px;">
+
+        <!-- Upcoming consult -->
+        <div class="card" style="border-color:#0f9d8c;border-width:1.5px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+            <div style="width:8px;height:8px;background:#0f9d8c;border-radius:50%;"></div>
+            <span style="font-size:11px;font-weight:600;color:#0f9d8c;letter-spacing:0.1em;text-transform:uppercase;">Upcoming</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap;">
+            <div style="width:52px;height:52px;background:#e6f5f3;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>
+            </div>
+            <div>
+              <div style="font-size:16px;font-weight:600;color:#0d2137;">Dr. Sarah Chen, MD</div>
+              <div style="font-size:12px;color:#7a9bb0;margin-top:2px;">Board-certified · Functional Medicine</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;">
+            <div class="stat-mini">
+              <div style="font-size:11px;color:#7a9bb0;margin-bottom:3px;">Date</div>
+              <div style="font-size:13px;font-weight:600;color:#0d2137;">Friday, Apr 18</div>
+            </div>
+            <div class="stat-mini">
+              <div style="font-size:11px;color:#7a9bb0;margin-bottom:3px;">Time</div>
+              <div style="font-size:13px;font-weight:600;color:#0d2137;">10:00 AM EST</div>
+            </div>
+            <div class="stat-mini">
+              <div style="font-size:11px;color:#7a9bb0;margin-bottom:3px;">Format</div>
+              <div style="font-size:13px;font-weight:600;color:#0d2137;">Secure video</div>
+            </div>
+            <div class="stat-mini">
+              <div style="font-size:11px;color:#7a9bb0;margin-bottom:3px;">Duration</div>
+              <div style="font-size:13px;font-weight:600;color:#0d2137;">~15 mins</div>
+            </div>
+          </div>
+          <div style="background:#f7f9fb;border-radius:8px;padding:14px;margin-bottom:16px;">
+            <div style="font-size:11px;font-weight:600;color:#7a9bb0;margin-bottom:6px;">AGENDA</div>
+            <div style="font-size:13px;color:#3d5a73;line-height:1.7;">Protocol progress review · Shoulder recovery assessment · Dosing adjustment if needed · Next cycle planning</div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn-primary" style="flex:1;min-width:140px;">Join consultation</button>
+            <button class="btn-outline" style="flex:1;min-width:140px;">Message ahead</button>
+          </div>
+        </div>
+
+        <!-- Past consultations -->
+        <div class="card">
+          <div style="font-size:13px;font-weight:600;color:#0d2137;margin-bottom:16px;">Past consultations</div>
+          <div style="display:flex;flex-direction:column;gap:0;">
+            <div style="padding:14px 0;border-bottom:1px solid #f0f4f7;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+              <div>
+                <div style="font-size:13px;font-weight:600;color:#0d2137;">Initial consultation</div>
+                <div style="font-size:12px;color:#7a9bb0;margin-top:2px;">Apr 1, 2026 · Dr. Sarah Chen</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span class="badge badge-green">Approved</span>
+                <button class="btn-outline" style="font-size:11px;padding:6px 12px;">View notes</button>
+              </div>
+            </div>
+            <div style="padding:14px 0;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+              <div>
+                <div style="font-size:13px;font-weight:600;color:#0d2137;">Week 2 follow-up</div>
+                <div style="font-size:12px;color:#7a9bb0;margin-top:2px;">Apr 14, 2026 · Dr. Sarah Chen</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span class="badge badge-green">Completed</span>
+                <button class="btn-outline" style="font-size:11px;padding:6px 12px;">View notes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════ -->
+    <!-- TAB 4: PROGRESS               -->
+    <!-- ══════════════════════════════ -->
+    <div class="tab-panel" id="tab-progress">
+      <div style="display:flex;flex-direction:column;gap:20px;">
+
+        <!-- Log today -->
+        <div class="card">
+          <div style="font-size:11px;font-weight:600;color:#0f9d8c;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Today — April 8</div>
+          <div class="s" style="font-size:22px;font-weight:400;color:#0d2137;margin-bottom:4px;">How are you feeling?</div>
+          <div style="font-size:13px;color:#7a9bb0;margin-bottom:20px;">Your physician reviews this before each consultation.</div>
+
+          <div style="display:flex;flex-direction:column;">
+            <div class="rating-row">
+              <div style="font-size:14px;font-weight:500;color:#0d2137;">Energy</div>
+              <div class="rating-dots" id="rating-energy">
+                <button class="rdot" onclick="setRating('energy',1)">1</button>
+                <button class="rdot" onclick="setRating('energy',2)">2</button>
+                <button class="rdot" onclick="setRating('energy',3)">3</button>
+                <button class="rdot" onclick="setRating('energy',4)">4</button>
+                <button class="rdot" onclick="setRating('energy',5)">5</button>
+              </div>
+            </div>
+            <div class="rating-row">
+              <div style="font-size:14px;font-weight:500;color:#0d2137;">Recovery</div>
+              <div class="rating-dots" id="rating-recovery">
+                <button class="rdot" onclick="setRating('recovery',1)">1</button>
+                <button class="rdot" onclick="setRating('recovery',2)">2</button>
+                <button class="rdot" onclick="setRating('recovery',3)">3</button>
+                <button class="rdot" onclick="setRating('recovery',4)">4</button>
+                <button class="rdot" onclick="setRating('recovery',5)">5</button>
+              </div>
+            </div>
+            <div class="rating-row">
+              <div style="font-size:14px;font-weight:500;color:#0d2137;">Sleep quality</div>
+              <div class="rating-dots" id="rating-sleep">
+                <button class="rdot" onclick="setRating('sleep',1)">1</button>
+                <button class="rdot" onclick="setRating('sleep',2)">2</button>
+                <button class="rdot" onclick="setRating('sleep',3)">3</button>
+                <button class="rdot" onclick="setRating('sleep',4)">4</button>
+                <button class="rdot" onclick="setRating('sleep',5)">5</button>
+              </div>
+            </div>
+            <div class="rating-row">
+              <div style="font-size:14px;font-weight:500;color:#0d2137;">Pain / discomfort</div>
+              <div class="rating-dots" id="rating-pain">
+                <button class="rdot" onclick="setRating('pain',1)">1</button>
+                <button class="rdot" onclick="setRating('pain',2)">2</button>
+                <button class="rdot" onclick="setRating('pain',3)">3</button>
+                <button class="rdot" onclick="setRating('pain',4)">4</button>
+                <button class="rdot" onclick="setRating('pain',5)">5</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:16px;">
+            <label style="font-size:12px;font-weight:600;color:#3d5a73;display:block;margin-bottom:6px;">Any notes for your physician? (optional)</label>
+            <textarea style="width:100%;border:1.5px solid #dde6ed;border-radius:8px;padding:12px;font-size:13px;font-family:'Outfit',sans-serif;color:#0d2137;resize:none;outline:none;transition:border-color .3s;line-height:1.6;" rows="3" placeholder="e.g. Shoulder pain down to 3/10 this week, noticed improvement in overhead movement..." onfocus="this.style.borderColor='#0f9d8c'" onblur="this.style.borderColor='#dde6ed'"></textarea>
+          </div>
+          <button class="btn-primary" style="width:100%;margin-top:14px;" id="log-btn" onclick="logProgress()">Save today's log</button>
+          <div id="log-success" style="display:none;text-align:center;padding:12px;background:#e6f5f3;border-radius:6px;margin-top:10px;font-size:13px;font-weight:600;color:#0b8578;">✓ Logged successfully</div>
+        </div>
+
+        <!-- 4-week trend chart -->
+        <div class="card">
+          <div style="font-size:13px;font-weight:600;color:#0d2137;margin-bottom:4px;">4-week trend</div>
+          <div style="font-size:12px;color:#7a9bb0;margin-bottom:20px;">Overall wellbeing score (1–5 average)</div>
+          <div style="display:flex;align-items:flex-end;gap:8px;height:100px;">
+            <div class="bar-wrap">
+              <div class="bar-track"><div class="bar-fill" style="height:50%;"></div></div>
+              <div style="font-size:10px;color:#7a9bb0;">W1</div>
+            </div>
+            <div class="bar-wrap">
+              <div class="bar-track"><div class="bar-fill" style="height:62%;"></div></div>
+              <div style="font-size:10px;color:#7a9bb0;">W2</div>
+            </div>
+            <div class="bar-wrap">
+              <div class="bar-track"><div class="bar-fill" style="height:74%;"></div></div>
+              <div style="font-size:10px;color:#7a9bb0;">W3</div>
+            </div>
+            <div class="bar-wrap">
+              <div class="bar-track"><div class="bar-fill" style="height:82%;"></div></div>
+              <div style="font-size:10px;color:#7a9bb0;">W4</div>
+            </div>
+          </div>
+          <div style="margin-top:14px;padding:12px;background:#e6f5f3;border-radius:8px;display:flex;align-items:center;gap:10px;">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"/></svg>
+            <div style="font-size:12px;color:#0b8578;font-weight:500;">Trending upward — 64% improvement over 4 weeks</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════ -->
+    <!-- TAB 5: ACCOUNT               -->
+    <!-- ══════════════════════════════ -->
+    <div class="tab-panel" id="tab-account">
+      <div style="display:flex;flex-direction:column;gap:20px;">
+
+        <!-- Subscription -->
+        <div class="card">
+          <div style="font-size:11px;font-weight:600;color:#0f9d8c;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;">Subscription</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+            <div>
+              <div style="font-size:18px;font-weight:600;color:#0d2137;">Accelerate Plan</div>
+              <div style="font-size:13px;color:#7a9bb0;margin-top:2px;">$249 / month · Billed monthly</div>
+            </div>
+            <span class="badge badge-green" style="font-size:12px;padding:5px 12px;">Active</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;">
+            <div class="stat-mini">
+              <div style="font-size:11px;color:#7a9bb0;margin-bottom:3px;">Next billing</div>
+              <div style="font-size:13px;font-weight:600;color:#0d2137;">May 1, 2026</div>
+            </div>
+            <div class="stat-mini">
+              <div style="font-size:11px;color:#7a9bb0;margin-bottom:3px;">Member since</div>
+              <div style="font-size:13px;font-weight:600;color:#0d2137;">April 1, 2026</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn-outline" style="flex:1;min-width:120px;">Change plan</button>
+            <button class="btn-outline" style="flex:1;min-width:120px;">Pause protocol</button>
+          </div>
+        </div>
+
+        <!-- Payment -->
+        <div class="card">
+          <div style="font-size:11px;font-weight:600;color:#0f9d8c;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;">Payment method</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="background:#f0f4f7;border:1px solid #dde6ed;border-radius:6px;padding:8px 12px;font-size:12px;font-weight:700;color:#0d2137;letter-spacing:0.05em;">VISA</div>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:#0d2137;">•••• •••• •••• 4291</div>
+                <div style="font-size:11px;color:#7a9bb0;margin-top:1px;">Expires 09/28</div>
+              </div>
+            </div>
+            <button class="btn-outline" style="font-size:12px;padding:8px 16px;">Update</button>
+          </div>
+        </div>
+
+        <!-- Shipping address -->
+        <div class="card">
+          <div style="font-size:11px;font-weight:600;color:#0f9d8c;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;">Shipping address</div>
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+            <div style="font-size:13px;color:#3d5a73;line-height:1.8;">
+              Marcus Rodriguez<br/>
+              142 West 72nd Street, Apt 8B<br/>
+              New York, NY 10023<br/>
+              United States
+            </div>
+            <button class="btn-outline" style="font-size:12px;padding:8px 16px;flex-shrink:0;">Edit</button>
+          </div>
+        </div>
+
+        <!-- Personal info -->
+        <div class="card">
+          <div style="font-size:11px;font-weight:600;color:#0f9d8c;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;">Personal info</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0f4f7;">
+              <div style="font-size:12px;color:#7a9bb0;">Name</div>
+              <div style="font-size:13px;font-weight:500;color:#0d2137;">Marcus Rodriguez</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0f4f7;">
+              <div style="font-size:12px;color:#7a9bb0;">Email</div>
+              <div style="font-size:13px;font-weight:500;color:#0d2137;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="026f637061777142676f636b6e2c616d6f">[email&#160;protected]</a></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0f4f7;">
+              <div style="font-size:12px;color:#7a9bb0;">Date of birth</div>
+              <div style="font-size:13px;font-weight:500;color:#0d2137;">March 14, 1988</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;">
+              <div style="font-size:12px;color:#7a9bb0;">Biological sex</div>
+              <div style="font-size:13px;font-weight:500;color:#0d2137;">Male</div>
+            </div>
+          </div>
+          <button class="btn-outline" style="width:100%;margin-top:14px;font-size:12px;">Edit personal info</button>
+        </div>
+
+        <!-- Danger zone -->
+        <div class="card" style="border-color:#fca5a5;">
+          <div style="font-size:11px;font-weight:600;color:#dc2626;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;">Cancel subscription</div>
+          <div style="font-size:13px;color:#7a9bb0;line-height:1.7;margin-bottom:14px;">You can cancel at any time with no fees. Your access continues through the end of your current billing period.</div>
+          <button class="btn-danger">Cancel subscription</button>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- main-content -->
+</main>
+
+</div><!-- app -->
+
+<!-- ─── BOTTOM NAV (mobile) ─── -->
+<nav class="bottom-nav">
+  <button class="bn-item active" id="bn-overview" onclick="showTab('overview',this,true)">
+    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/></svg>
+    <span>Overview</span>
+  </button>
+  <button class="bn-item" id="bn-protocol" onclick="showTab('protocol',this,true)">
+    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714a2.25 2.25 0 001.357 2.065L19.5 12"/></svg>
+    <span>Protocol</span>
+  </button>
+  <button class="bn-item" id="bn-checkin" onclick="showTab('checkin',this,true)">
+    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5"/></svg>
+    <span>Check-in</span>
+  </button>
+  <button class="bn-item" id="bn-progress" onclick="showTab('progress',this,true)">
+    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"/></svg>
+    <span>Progress</span>
+  </button>
+  <button class="bn-item" id="bn-account" onclick="showTab('account',this,true)">
+    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>
+    <span>Account</span>
+  </button>
+</nav>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const TABS = {
+  overview:  { breadcrumb: 'Overview', title: 'Good morning, Marcus' },
+  protocol:  { breadcrumb: 'Protocol', title: 'Recovery & Repair' },
+  checkin:   { breadcrumb: 'Check-in', title: 'Your consultations' },
+  progress:  { breadcrumb: 'Progress', title: 'How are you feeling?' },
+  account:   { breadcrumb: 'Account', title: 'Account & billing' },
+};
+
+const ratings = {};
+
+function showTab(id, btn, fromMobile) {
+  // Hide all panels
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+
+  // Update header
+  document.getElementById('tab-breadcrumb').textContent = TABS[id].breadcrumb;
+  document.getElementById('tab-title').textContent = TABS[id].title;
+
+  // Update sidebar nav
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.sidebar-nav .nav-item').forEach(n => {
+    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + id + "'")) {
+      n.classList.add('active');
+    }
+  });
+
+  // Update bottom nav
+  document.querySelectorAll('.bn-item').forEach(n => n.classList.remove('active'));
+  const bnEl = document.getElementById('bn-' + id);
+  if (bnEl) bnEl.classList.add('active');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setRating(metric, value) {
+  ratings[metric] = value;
+  const container = document.getElementById('rating-' + metric);
+  container.querySelectorAll('.rdot').forEach((dot, i) => {
+    dot.classList.toggle('active', i < value);
+  });
+}
+
+function logProgress() {
+  document.getElementById('log-success').style.display = 'block';
+  document.getElementById('log-btn').textContent = 'Logged ✓';
+  document.getElementById('log-btn').style.background = '#0b8578';
+  setTimeout(() => {
+    document.getElementById('log-success').style.display = 'none';
+    document.getElementById('log-btn').textContent = 'Save today\'s log';
+    document.getElementById('log-btn').style.background = '';
+  }, 3000);
+}
+
+// Greet based on time
+co

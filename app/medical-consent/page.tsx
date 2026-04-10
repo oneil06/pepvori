@@ -5,11 +5,11 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 export const metadata: Metadata = {
-  title: 'HIPAA Notice of Privacy Practices — Pepvori',
-  description: 'Pepvori HIPAA Notice — how we use and protect your Protected Health Information.',
+  title: 'Medical Consent — Pepvori',
+  description: 'Pepvori Medical Consent — your rights and what you are consenting to when you use Pepvori services.',
 }
 
-export default function HipaaPage() {
+export default function MedicalConsentPage() {
   const router = useRouter()
   return (
     <>
@@ -58,13 +58,13 @@ export default function HipaaPage() {
         <div style={{maxWidth:'1200px',margin:'0 auto',display:'flex',alignItems:'center',gap:'8px'}}>
           <Link href="/" style={{fontSize:'13px',color:'#7a9bb0',textDecoration:'none'}}>Home</Link>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#dde6ed" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
-          <span style={{fontSize:'13px',color:'#0d2137',fontWeight:500}}>HIPAA Notice</span>
+          <span style={{fontSize:'13px',color:'#0d2137',fontWeight:500}}>Medical Consent</span>
         </div>
       </div>
 
       <div style={{background:'#0d2137'}}>
         <div className="hero-pad" style={{maxWidth:'800px',margin:'0 auto',padding:'64px 56px 52px'}}>
-          <h1 className="s" style={{fontSize:'50px',fontWeight:300,lineHeight:1.05,color:'#fff',marginBottom:'14px'}}>HIPAA Notice of<br/><em style={{color:'#b3e0db'}}>Privacy Practices</em></h1>
+          <h1 className="s" style={{fontSize:'50px',fontWeight:300,lineHeight:1.05,color:'#fff',marginBottom:'14px'}}>Medical Consent</h1>
           <p style={{fontSize:'14px',color:'rgba(255,255,255,.38)',lineHeight:1.7}}>Last updated: January 15, 2026 &nbsp;·&nbsp; Effective: January 15, 2026</p>
         </div>
       </div>
@@ -73,93 +73,83 @@ export default function HipaaPage() {
         <div className="toc-sidebar" style={{position:'sticky',top:'84px'}}>
           <div style={{fontSize:'11px',fontWeight:600,letterSpacing:'0.1em',textTransform:'uppercase',color:'#b3c5d2',marginBottom:'12px'}}>On this page</div>
           <a href="#overview" className="toc-link">Overview</a>
-          <a href="#phi" className="toc-link">Protected health info</a>
-          <a href="#uses" className="toc-link">How we use PHI</a>
-          <a href="#disclosures" className="toc-link">Disclosures</a>
-          <a href="#rights" className="toc-link">Your rights</a>
-          <a href="#obligations" className="toc-link">Our obligations</a>
-          <a href="#breach" className="toc-link">Breach notification</a>
-          <a href="#complaints" className="toc-link">Complaints</a>
-          <a href="#contact" className="toc-link">Contact</a>
+          <a href="#telehealth" className="toc-link">Telehealth consent</a>
+          <a href="#treatment" className="toc-link">Treatment consent</a>
+          <a href="#risks" className="toc-link">Risks &amp; alternatives</a>
+          <a href="#compounded" className="toc-link">Compounded medications</a>
+          <a href="#voluntary" className="toc-link">Voluntary participation</a>
+          <a href="#records" className="toc-link">Medical records</a>
+          <a href="#withdrawal" className="toc-link">Right to withdraw</a>
+          <a href="#contact" className="toc-link">Questions</a>
           <div style={{marginTop:'24px',paddingTop:'20px',borderTop:'1px solid #dde6ed'}}>
             <div style={{fontSize:'11px',fontWeight:600,letterSpacing:'0.1em',textTransform:'uppercase',color:'#b3c5d2',marginBottom:'12px'}}>Related</div>
             <Link href="/privacy" className="toc-link">Privacy Policy</Link>
+            <Link href="/hipaa" className="toc-link">HIPAA Notice</Link>
             <Link href="/terms" className="toc-link">Terms of Service</Link>
-            <Link href="/medical-consent" className="toc-link">Medical Consent</Link>
           </div>
         </div>
 
         <div className="prose">
           <div id="overview" style={{background:'#f7f9fb',border:'1px solid #dde6ed',borderLeft:'3px solid #0f9d8c',borderRadius:'0 8px 8px 0',padding:'20px 24px',marginBottom:'32px'}}>
-            <p style={{margin:0,fontSize:'13px',color:'#3d5a73',lineHeight:1.7}}><strong style={{color:'#0d2137'}}>Summary:</strong> This notice describes how your Protected Health Information (PHI) may be used and disclosed, and how you can access it. We are required by law to maintain the privacy of your PHI and to provide you with this notice. Your PHI will never be sold to third parties or used for advertising.</p>
+            <p style={{margin:0,fontSize:'13px',color:'#3d5a73',lineHeight:1.7}}><strong style={{color:'#0d2137'}}>Summary:</strong> This document explains your rights and what you are consenting to when you use Pepvori&apos;s services. You have the right to ask questions, refuse treatment, and withdraw at any time. All clinical care is provided by independent licensed physicians — not Pepvori.</p>
           </div>
 
-          <h2 id="phi">1. What is Protected Health Information?</h2>
-          <p>Protected Health Information (PHI) is information about you — including demographic data — that relates to your past, present, or future physical or mental health or condition, the provision of healthcare to you, or the past, present, or future payment for the provision of healthcare to you, and that identifies you or for which there is a reasonable basis to believe it can be used to identify you.</p>
-          <p>To the extent Pepvori functions as a Business Associate of covered healthcare providers (the independent licensed physicians in our network), Pepvori handles PHI in accordance with HIPAA and applicable Business Associate Agreement obligations.</p>
-
-          <h2 id="uses">2. How we use your PHI</h2>
-          <h3>Treatment</h3>
-          <p>We use and disclose PHI for treatment purposes — for example, sharing your intake information with your assigned physician so they can evaluate your health status and determine whether a protocol is appropriate for you.</p>
-          <h3>Payment</h3>
-          <p>We may use and disclose PHI in connection with payment activities, including billing for membership and medications, processing insurance claims if applicable, and verifying coverage.</p>
-          <h3>Healthcare operations</h3>
-          <p>We may use and disclose PHI for our internal healthcare operations, including quality assessment, training, compliance activities, and improving our services.</p>
-
-          <h2 id="disclosures">3. Disclosures</h2>
-          <p>We may disclose your PHI in the following circumstances without your specific authorization:</p>
+          <h2 id="telehealth">1. Consent to telehealth services</h2>
+          <p>By completing your intake and scheduling a consultation, you consent to receiving healthcare services via telehealth (remote video or asynchronous messaging). You understand that:</p>
           <ul>
-            <li><strong>As required by law:</strong> When required by federal, state, or local law</li>
-            <li><strong>Public health activities:</strong> To authorized public health authorities for disease reporting, injury, or disability tracking</li>
-            <li><strong>Law enforcement:</strong> In response to a court order, warrant, or other lawful process</li>
-            <li><strong>Health oversight:</strong> To government agencies for audits, investigations, or licensure inspections</li>
-            <li><strong>Serious threat:</strong> To prevent or lessen a serious and imminent threat to a person or the public</li>
+            <li>Telehealth involves the delivery of healthcare services using electronic communications and does not involve an in-person examination</li>
+            <li>Your physician may determine that telehealth is not appropriate for your specific situation and may refer you to an in-person provider</li>
+            <li>The quality and completeness of care may differ from in-person evaluation</li>
+            <li>Technical failures may interrupt or prevent a consultation from occurring</li>
+            <li>All telehealth sessions are conducted by independent licensed physicians, not Pepvori employees</li>
           </ul>
-          <p>All other disclosures of your PHI require your written authorization, which you may revoke at any time by contacting us in writing.</p>
 
-          <h2 id="rights">4. Your rights regarding your PHI</h2>
-          <h3>Right to access</h3>
-          <p>You have the right to inspect and obtain a copy of your PHI that we maintain, with limited exceptions. Requests may be submitted in writing to our Privacy Officer.</p>
-          <h3>Right to amend</h3>
-          <p>You have the right to request an amendment to your PHI if you believe it is incorrect or incomplete. We may deny the request under certain circumstances, and will explain the reason in writing.</p>
-          <h3>Right to an accounting of disclosures</h3>
-          <p>You have the right to receive a list of certain disclosures we have made of your PHI. This does not include disclosures for treatment, payment, or healthcare operations.</p>
-          <h3>Right to request restrictions</h3>
-          <p>You have the right to request restrictions on certain uses and disclosures of your PHI. We are not required to agree to all requested restrictions, but will comply with any restriction you request regarding disclosure to a health plan for payment or healthcare operations when you have paid for the service out-of-pocket.</p>
-          <h3>Right to confidential communications</h3>
-          <p>You have the right to request that we communicate with you about your PHI in a specific way or at a specific location. We will accommodate reasonable requests.</p>
-          <h3>Right to a paper copy</h3>
-          <p>You have the right to a paper copy of this notice upon request, even if you have agreed to receive it electronically.</p>
-
-          <h2 id="obligations">5. Our obligations</h2>
-          <p>Pepvori is required to:</p>
+          <h2 id="treatment">2. Consent to treatment</h2>
+          <p>If your assigned physician determines that peptide therapy is appropriate, you consent to:</p>
           <ul>
-            <li>Maintain the privacy of your PHI</li>
-            <li>Provide you with notice of our legal duties and privacy practices with respect to PHI</li>
-            <li>Abide by the terms of the notice currently in effect</li>
-            <li>Notify you following a breach of unsecured PHI</li>
+            <li>Receiving a prescription for one or more compounded peptide medications</li>
+            <li>Self-administration of medications as instructed (which may include subcutaneous injections, oral capsules, or nasal sprays depending on your protocol)</li>
+            <li>Ongoing physician monitoring through portal check-ins and follow-up consultations</li>
+            <li>Your physician sharing relevant clinical information with Pepvori&apos;s care coordination team for logistics purposes</li>
           </ul>
-          <p>We reserve the right to change our privacy practices and to make the new practices effective for all PHI we maintain. We will post the revised notice on our website and make it available upon request.</p>
+          <p>You understand that no prescription will be issued without your physician&apos;s independent clinical judgment, and that you may decline any recommended treatment at any time.</p>
 
-          <h2 id="breach">6. Breach notification</h2>
-          <p>In the event of a breach of unsecured PHI, we will notify affected individuals without unreasonable delay and within 60 days of discovery. Notification will include a description of the breach, the types of information involved, steps you should take, what we are doing to investigate and mitigate the breach, and contact information for further questions.</p>
+          <h2 id="risks">3. Risks &amp; alternatives</h2>
+          <p>You acknowledge that peptide therapy, like all medical treatments, carries potential risks including but not limited to:</p>
+          <ul>
+            <li>Injection site reactions (redness, swelling, bruising)</li>
+            <li>Nausea, fatigue, or other systemic effects depending on the specific peptide</li>
+            <li>Interactions with existing medications or conditions</li>
+            <li>Unknown long-term effects, as research on some peptides is still evolving</li>
+          </ul>
+          <p>Your physician will discuss specific risks and alternatives relevant to your protocol during your consultation. You are encouraged to ask questions and disclose all current medications and health conditions during your intake and consultation.</p>
 
-          <h2 id="complaints">7. Complaints</h2>
-          <p>If you believe your privacy rights have been violated, you may file a complaint with Pepvori or with the U.S. Department of Health and Human Services Office for Civil Rights. To file a complaint with Pepvori, contact our Privacy Officer in writing. We will not retaliate against you for filing a complaint.</p>
-          <p><strong>U.S. Department of Health and Human Services:</strong><br/>200 Independence Avenue, S.W., Washington, D.C. 20201 | <a href="https://www.hhs.gov/hipaa" target="_blank" rel="noreferrer">hhs.gov/hipaa</a></p>
+          <h2 id="compounded">4. Compounded medications</h2>
+          <p>You understand and acknowledge that:</p>
+          <ul>
+            <li>Compounded medications are prepared by licensed compounding pharmacies and are not FDA-approved as finished drug products</li>
+            <li>Compounding pharmacies operate under state pharmacy board regulation and, where applicable, comply with USP standards</li>
+            <li>The safety, efficacy, and quality of compounded medications are not evaluated by the FDA in the same manner as commercially manufactured drugs</li>
+            <li>You have been offered the opportunity to ask questions about your specific medications prior to use</li>
+          </ul>
 
-          <h2 id="contact">8. Contact our Privacy Officer</h2>
-          <p>For questions about this notice or to exercise your rights, please contact:</p>
-          <div style={{background:'#f7f9fb',border:'1px solid #dde6ed',borderRadius:'8px',padding:'20px 24px',marginTop:'8px'}}>
-            <p style={{marginBottom:'4px'}}><strong>Privacy Officer, Pepvori Health, Inc.</strong></p>
-            <p style={{marginBottom:'4px'}}>Email: <a href="mailto:privacy@pepvori.com">privacy@pepvori.com</a></p>
-            <p style={{margin:0}}>Or via our <Link href="/contact">contact form</Link> — select &quot;General inquiry.&quot;</p>
-          </div>
+          <h2 id="voluntary">5. Voluntary participation</h2>
+          <p>Your participation in Pepvori&apos;s program is entirely voluntary. You are under no obligation to proceed with any recommended treatment. Refusing treatment will not affect your ability to continue using the platform for informational purposes, and you may cancel your membership at any time per our <Link href="/terms">Terms of Service</Link>.</p>
+
+          <h2 id="records">6. Medical records</h2>
+          <p>You consent to your independent physician creating, maintaining, and retaining medical records related to your care. These records are subject to your rights under HIPAA and applicable state law. You may request a copy of your records at any time by contacting your physician&apos;s office or our care team.</p>
+          <p>Records are retained for a minimum of seven (7) years following your last treatment, or longer where required by state law.</p>
+
+          <h2 id="withdrawal">7. Right to withdraw consent</h2>
+          <p>You may withdraw this consent at any time by notifying your physician or contacting Pepvori&apos;s care team. Withdrawal does not affect the lawfulness of any treatment or services already provided. Following withdrawal, your physician will discuss any clinical implications with you.</p>
+
+          <h2 id="contact">8. Questions</h2>
+          <p>If you have questions about this Medical Consent form before or after completing your intake, please contact us at <a href="mailto:hello@pepvori.com">hello@pepvori.com</a> or through our <Link href="/contact">contact page</Link>. Your physician is also available to answer clinical questions during your consultation.</p>
 
           <div style={{marginTop:'40px',paddingTop:'32px',borderTop:'1px solid #dde6ed',display:'flex',gap:'12px',flexWrap:'wrap'}}>
             <Link href="/privacy" style={{display:'inline-flex',alignItems:'center',gap:'6px',background:'#f7f9fb',border:'1px solid #dde6ed',borderRadius:'6px',padding:'10px 16px',fontSize:'13px',color:'#3d5a73',textDecoration:'none'}}>Privacy Policy →</Link>
+            <Link href="/hipaa" style={{display:'inline-flex',alignItems:'center',gap:'6px',background:'#f7f9fb',border:'1px solid #dde6ed',borderRadius:'6px',padding:'10px 16px',fontSize:'13px',color:'#3d5a73',textDecoration:'none'}}>HIPAA Notice →</Link>
             <Link href="/terms" style={{display:'inline-flex',alignItems:'center',gap:'6px',background:'#f7f9fb',border:'1px solid #dde6ed',borderRadius:'6px',padding:'10px 16px',fontSize:'13px',color:'#3d5a73',textDecoration:'none'}}>Terms of Service →</Link>
-            <Link href="/medical-consent" style={{display:'inline-flex',alignItems:'center',gap:'6px',background:'#f7f9fb',border:'1px solid #dde6ed',borderRadius:'6px',padding:'10px 16px',fontSize:'13px',color:'#3d5a73',textDecoration:'none'}}>Medical Consent →</Link>
           </div>
         </div>
       </div>
@@ -193,8 +183,8 @@ export default function HipaaPage() {
             <div style={{display:'flex',flexDirection:'column',gap:'10px'}}>
               <Link href="/privacy" style={{color:'rgba(255,255,255,.42)',fontSize:'13px'}}>Privacy Policy</Link>
               <Link href="/terms" style={{color:'rgba(255,255,255,.42)',fontSize:'13px'}}>Terms of Service</Link>
-              <Link href="/medical-consent" style={{color:'rgba(255,255,255,.42)',fontSize:'13px'}}>Medical Consent</Link>
-              <Link href="/hipaa" style={{color:'#0f9d8c',fontSize:'13px',fontWeight:500}}>HIPAA Notice</Link>
+              <Link href="/medical-consent" style={{color:'#0f9d8c',fontSize:'13px',fontWeight:500}}>Medical Consent</Link>
+              <Link href="/hipaa" style={{color:'rgba(255,255,255,.42)',fontSize:'13px'}}>HIPAA Notice</Link>
             </div>
           </div>
         </div>

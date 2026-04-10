@@ -1,5 +1,8 @@
+'use client'
+
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'How It Works — Pepvori',
@@ -46,6 +49,7 @@ const STEPS = [
 ]
 
 export default function HowItWorksPage() {
+  const router = useRouter()
   return (
     <>
       {/* PAGE HERO */}
@@ -63,8 +67,8 @@ export default function HowItWorksPage() {
               Three steps. No waiting rooms. A licensed physician reviews your health profile and prescribes your protocol — all online.
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-              <Link href="/intake"><button className="cta-btn-primary" style={{ padding: '13px 28px', fontSize: 14 }}>Begin Your Assessment</button></Link>
-              <Link href="/protocols"><button style={{ background: 'transparent', color: '#0d2137', border: '1.5px solid #dde6ed', padding: '13px 28px', borderRadius: 4, fontSize: 14, fontWeight: 500, cursor: 'pointer', fontFamily: "'Outfit', sans-serif" }}>View Protocols</button></Link>
+              <button className="cta-btn-primary" style={{ padding: '13px 28px', fontSize: 14 }} onClick={() => router.push('/intake')}>Begin Your Assessment</button>
+              <button style={{ background: 'transparent', color: '#0d2137', border: '1.5px solid #dde6ed', padding: '13px 28px', borderRadius: 4, fontSize: 14, fontWeight: 500, cursor: 'pointer', fontFamily: "'Outfit', sans-serif" }} onClick={() => router.push('/protocols')}>View Protocols</button>
             </div>
           </div>
 
@@ -219,8 +223,8 @@ export default function HowItWorksPage() {
           Complete your intake in under 10 minutes. A physician confirms your protocol within 24 hours.
         </p>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link href="/intake"><button className="cta-btn-primary">Begin Your Assessment</button></Link>
-          <Link href="/pricing"><button className="cta-btn-ghost">View pricing</button></Link>
+          <button className="cta-btn-primary" onClick={() => router.push('/intake')}>Begin Your Assessment</button>
+          <button className="cta-btn-ghost" onClick={() => router.push('/pricing')}>View pricing</button>
         </div>
       </section>
     </>

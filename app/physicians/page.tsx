@@ -1,5 +1,8 @@
+'use client'
+
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Our Physicians — Pepvori',
@@ -7,6 +10,7 @@ export const metadata: Metadata = {
 }
 
 export default function PhysiciansPage() {
+  const router = useRouter()
   return (
     <>
       <style>{`
@@ -47,7 +51,7 @@ export default function PhysiciansPage() {
           <Link href="/protocols" className="nav-link">Protocols</Link>
           <Link href="/how-it-works" className="nav-link">How It Works</Link>
           <Link href="/pricing" className="nav-link">Pricing</Link>
-          <Link href="/intake"><button className="nav-btn">Begin Intake</button></Link>
+          <button className="nav-btn" onClick={() => router.push('/intake')}>Begin Intake</button>
         </div>
       </nav>
 
@@ -264,7 +268,7 @@ export default function PhysiciansPage() {
         <div style={{maxWidth:'520px',margin:'0 auto'}}>
           <h2 className="s" style={{fontSize:'48px',fontWeight:300,letterSpacing:'-0.02em',lineHeight:1.05,color:'#fff',marginBottom:'16px'}}>Ready to meet your<br/><em style={{color:'#b3e0db'}}>physician?</em></h2>
           <p style={{fontSize:'15px',color:'rgba(255,255,255,.45)',maxWidth:'380px',margin:'0 auto 32px',fontWeight:300,lineHeight:1.8}}>Begin your intake and you&apos;ll be matched with a physician from our network within 24 hours.</p>
-          <Link href="/intake"><button style={{background:'#0f9d8c',color:'#fff',border:'none',padding:'14px 36px',borderRadius:'4px',fontSize:'14px',fontWeight:600,cursor:'pointer',transition:'background .4s'}}>Begin Your Assessment</button></Link>
+          <button style={{background:'#0f9d8c',color:'#fff',border:'none',padding:'14px 36px',borderRadius:'4px',fontSize:'14px',fontWeight:600,cursor:'pointer',transition:'background .4s'}} onClick={() => router.push('/intake')}>Begin Your Assessment</button>
         </div>
       </div>
 

@@ -2,8 +2,10 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 export default function ContactPage() {
+  const router = useRouter()
   const [form, setForm] = useState({
     firstName: '', lastName: '', email: '', topic: '', message: '', privacyOk: false,
   })
@@ -174,7 +176,7 @@ export default function ContactPage() {
         <p style={{ fontSize: 15, color: 'rgba(255,255,255,.45)', maxWidth: 360, margin: '0 auto 28px', fontWeight: 300, lineHeight: 1.8 }}>
           Complete your intake and a physician will review your profile within 24 hours.
         </p>
-        <Link href="/intake"><button className="cta-btn-primary">Begin Your Assessment</button></Link>
+        <button className="cta-btn-primary" onClick={() => router.push('/intake')}>Begin Your Assessment</button>
       </section>
     </>
   )

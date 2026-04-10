@@ -277,7 +277,7 @@ export default function PricingPage() {
         </p>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
           <button className="cta-btn-primary" onClick={() => router.push('/intake')}>Begin Your Assessment</button>
-          <Link href="/how-it-works"><button className="cta-btn-ghost">How it works</button></Link>
+          <button className="cta-btn-ghost" onClick={() => router.push('/how-it-works')}>How it works</button>
         </div>
       </section>
     </>

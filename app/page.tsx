@@ -97,9 +97,7 @@ export default function HomePage() {
             <button className="hero-btn-primary" onClick={() => router.push('/intake')}>
               Begin Your Assessment
             </button>
-            <Link href="/protocols">
-              <button className="hero-btn-ghost">Explore Protocols</button>
-            </Link>
+            <button className="hero-btn-ghost" onClick={() => router.push('/protocols')}>Explore Protocols</button>
           </div>
           <div style={{ marginTop: 36, display: 'flex', gap: 28, flexWrap: 'wrap' }}>
             {['Licensed physicians', '48-hr delivery', 'HSA/FSA eligible'].map(t => (
@@ -174,16 +172,14 @@ export default function HomePage() {
                 Built for every<br /><em style={{ color: '#0f9d8c' }}>biological goal.</em>
               </h2>
             </div>
-            <Link href="/protocols">
-              <button style={{
+            <button style={{
                 background: 'transparent', color: '#0d2137', border: '1.5px solid #dde6ed',
                 padding: '10px 20px', borderRadius: 4, fontSize: 13, fontWeight: 500,
                 cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: "'Outfit', sans-serif",
                 transition: 'border-color .2s, color .2s',
-              }}>
+              }} onClick={() => router.push('/protocols')}>
                 View all protocols →
               </button>
-            </Link>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20 }}>
             {PROTOCOLS.map(p => (
@@ -434,9 +430,7 @@ export default function HomePage() {
           <button className="cta-btn-primary" onClick={() => router.push('/intake')}>
             Begin Your Assessment
           </button>
-          <Link href="/how-it-works">
-            <button className="cta-btn-ghost">How it works</button>
-          </Link>
+          <button className="cta-btn-ghost" onClick={() => router.push('/how-it-works')}>How it works</button>
         </div>
       </section>
     </>

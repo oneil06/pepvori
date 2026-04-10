@@ -1,5 +1,8 @@
+'use client'
+
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Terms of Service — Pepvori',
@@ -7,6 +10,7 @@ export const metadata: Metadata = {
 }
 
 export default function TermsPage() {
+  const router = useRouter()
   return (
     <>
       <style>{`
@@ -46,7 +50,7 @@ export default function TermsPage() {
           <Link href="/protocols" className="nav-link">Protocols</Link>
           <Link href="/how-it-works" className="nav-link">How It Works</Link>
           <Link href="/pricing" className="nav-link">Pricing</Link>
-          <Link href="/intake"><button className="nav-btn">Begin Intake</button></Link>
+          <button className="nav-btn" onClick={() => router.push('/intake')}>Begin Intake</button>
         </div>
       </nav>
 

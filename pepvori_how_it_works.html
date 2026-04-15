@@ -51,6 +51,17 @@ a{text-decoration:none;}
   .nav-links a,.nav-links button{color:#0d2137!important;width:100%;text-align:left;padding:16px 24px!important;font-size:15px!important;border-radius:0!important;border-bottom:1px solid #f0f4f7;box-sizing:border-box;}
   .nav-links .nav-btn{background:none!important;color:#0d2137!important;font-weight:600!important;border-bottom:1px solid #f0f4f7;}
   .hamburger{display:flex!important;flex-direction:column;justify-content:center;gap:5px;}
+  /* HOW IT WORKS PAGE */
+  h1.s{font-size:38px!important;line-height:1.1!important;}
+  h2.s{font-size:28px!important;line-height:1.15!important;}
+  .hiw-2col{grid-template-columns:1fr!important;gap:32px!important;margin-bottom:48px!important;}
+  .hiw-3col{grid-template-columns:1fr!important;}
+  div[style*="background:#f7f9fb"][style*="padding:80px 56px"]{padding:56px 20px!important;}
+  div[style*="background:#fff"][style*="padding:96px 56px"]{padding:56px 20px!important;}
+  div[style*="background:#0d2137"][style*="padding:96px 56px"]{padding:56px 20px!important;}
+  div[style*="padding:80px 56px"]{padding:56px 20px!important;}
+  footer{padding:48px 20px 32px!important;}
+  .footer-grid{grid-template-columns:1fr 1fr!important;gap:32px!important;}
 }
 </style>
 </head>
@@ -87,7 +98,7 @@ a{text-decoration:none;}
 
 <!-- PAGE HERO -->
 <div style="background:#f7f9fb;padding:80px 56px 72px;border-bottom:1px solid #dde6ed;">
-  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+  <div class="hiw-2col" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
     <div class="fade-up">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
         <div style="width:20px;height:2px;background:#0f9d8c;border-radius:2px;"></div>
@@ -144,7 +155,7 @@ a{text-decoration:none;}
     </div>
 
     <!-- STEP 1 -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-bottom:96px;">
+    <div class="hiw-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-bottom:96px;">
       <div>
         <div style="display:flex;align-items:center;gap:16px;margin-bottom:28px;">
           <div class="s" style="font-size:72px;font-weight:300;color:#e6f5f3;line-height:1;flex-shrink:0;">01</div>
@@ -213,7 +224,7 @@ a{text-decoration:none;}
     </div>
 
     <!-- STEP 2 -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-bottom:96px;">
+    <div class="hiw-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-bottom:96px;">
       <div style="background:#f7f9fb;border:1px solid #dde6ed;border-radius:12px;overflow:hidden;">
         <div style="padding:32px 32px 20px;">
           <div style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#7a9bb0;margin-bottom:8px;">Your consultation</div>
@@ -280,7 +291,7 @@ a{text-decoration:none;}
     </div>
 
     <!-- STEP 3 -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+    <div class="hiw-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
       <div>
         <div style="display:flex;align-items:center;gap:16px;margin-bottom:28px;">
           <div class="s" style="font-size:72px;font-weight:300;color:#e6f5f3;line-height:1;flex-shrink:0;">03</div>
@@ -354,7 +365,7 @@ a{text-decoration:none;}
       <h2 class="s" style="font-size:48px;font-weight:400;letter-spacing:-0.01em;color:#fff;margin-bottom:16px;">Ongoing care, <em style="color:#b3e0db">not just a shipment.</em></h2>
       <p style="font-size:15px;color:rgba(255,255,255,.45);line-height:1.8;font-weight:300;">Your protocol evolves with you. Monthly physician check-ins, AI-powered progress tracking, and protocol adjustments are included in every plan.</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+    <div class="hiw-3col" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
       <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:32px;">
         <div style="width:44px;height:44px;background:rgba(15,157,140,.15);border-radius:10px;margin-bottom:20px;display:flex;align-items:center;justify-content:center;">
           <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"/></svg>
@@ -424,7 +435,7 @@ a{text-decoration:none;}
 
 <!-- FOOTER -->
 <footer style="background:#09192a;padding:60px 56px 40px;">
-  <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:44px;margin-bottom:40px;">
+  <div class="footer-grid" style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:44px;margin-bottom:40px;">
     <div>
       <a href="pepvori_landing_page_preview.html" style="text-decoration:none;">
         <div class="s" style="font-size:20px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#fff;margin-bottom:12px;">PEP<span style="color:#0f9d8c">VORI</span></div>

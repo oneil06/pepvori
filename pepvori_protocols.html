@@ -48,6 +48,15 @@ a{text-decoration:none;}
   .nav-links a,.nav-links button{color:#0d2137!important;width:100%;text-align:left;padding:16px 24px!important;font-size:15px!important;border-radius:0!important;border-bottom:1px solid #f0f4f7;box-sizing:border-box;}
   .nav-links .nav-btn{background:none!important;color:#0d2137!important;font-weight:600!important;border-bottom:1px solid #f0f4f7;}
   .hamburger{display:flex!important;flex-direction:column;justify-content:center;gap:5px;}
+  /* PROTOCOLS PAGE */
+  h1.s{font-size:38px!important;line-height:1.1!important;}
+  h2.s{font-size:28px!important;line-height:1.15!important;}
+  .proto-2col{grid-template-columns:1fr!important;gap:32px!important;}
+  .proto-cards{grid-template-columns:1fr!important;}
+  div[style*="background:#f7f9fb"][style*="padding:80px 56px"]{padding:56px 20px!important;}
+  div[style*="padding:80px 56px"]{padding:56px 20px!important;}
+  footer{padding:48px 20px 32px!important;}
+  .footer-grid{grid-template-columns:1fr 1fr!important;gap:32px!important;}
 }
 </style>
 </head>
@@ -84,7 +93,7 @@ a{text-decoration:none;}
 
 <!-- PAGE HERO -->
 <div style="background:#f7f9fb;padding:80px 56px 72px;border-bottom:1px solid #dde6ed;">
-  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+  <div class="proto-2col" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
     <div class="fade-up">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
         <div style="width:20px;height:2px;background:#0f9d8c;border-radius:2px;"></div>
@@ -160,7 +169,7 @@ a{text-decoration:none;}
 <!-- PROTOCOL CARDS -->
 <section style="padding:64px 56px;background:#fff;">
   <div style="max-width:1200px;margin:0 auto;">
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;" id="proto-grid">
+    <div class="proto-cards" style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;" id="proto-grid">
 
       <!-- Recovery & Repair -->
       <div class="proto-card fade-up" data-tag="recovery" id="card-0">
@@ -314,7 +323,7 @@ a{text-decoration:none;}
 
 <!-- NOT SURE SECTION -->
 <section style="padding:80px 56px;background:#f7f9fb;border-top:1px solid #dde6ed;">
-  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+  <div class="proto-2col" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
     <div>
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
         <div style="width:20px;height:2px;background:#0f9d8c;border-radius:2px;"></div>
@@ -370,7 +379,7 @@ a{text-decoration:none;}
 
 <!-- FOOTER -->
 <footer style="background:#09192a;padding:60px 56px 40px;">
-  <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:44px;margin-bottom:40px;">
+  <div class="footer-grid" style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:44px;margin-bottom:40px;">
     <div>
       <a href="pepvori_landing_page_preview.html">
         <div class="s" style="font-size:20px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#fff;margin-bottom:12px;">PEP<span style="color:#0f9d8c">VORI</span></div>

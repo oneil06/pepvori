@@ -48,6 +48,17 @@ a{text-decoration:none;}
   .nav-links a,.nav-links button{color:#0d2137!important;width:100%;text-align:left;padding:16px 24px!important;font-size:15px!important;border-radius:0!important;border-bottom:1px solid #f0f4f7;box-sizing:border-box;}
   .nav-links .nav-btn{background:none!important;color:#0d2137!important;font-weight:600!important;border-bottom:1px solid #f0f4f7;}
   .hamburger{display:flex!important;flex-direction:column;justify-content:center;gap:5px;}
+  /* PHYSICIANS PAGE */
+  .hero-pad{padding:56px 20px 48px!important;}
+  h1.s{font-size:38px!important;}
+  .stats-row{grid-template-columns:repeat(2,1fr)!important;}
+  .physicians-grid{grid-template-columns:1fr!important;}
+  .process-grid{grid-template-columns:1fr!important;}
+  div[style*="padding:72px 56px"]{padding:56px 20px!important;}
+  div[style*="padding:72px 56px 96px"]{padding:56px 20px!important;}
+  div[style*="background:#f7f9fb"][style*="padding:72px 56px"]{padding:56px 20px!important;}
+  footer{padding:48px 20px 32px!important;}
+  .footer-grid{grid-template-columns:1fr 1fr!important;gap:32px!important;}
 }
 </style>
 </head>
@@ -274,7 +285,7 @@ a{text-decoration:none;}
       <h2 class="s" style="font-size:40px;font-weight:400;color:#0d2137;margin-bottom:8px;">How physician oversight works</h2>
       <p style="font-size:14px;color:#7a9bb0;max-width:480px;margin:0 auto;line-height:1.7;">Every patient interaction follows a structured clinical process. No protocol is ever started without physician review.</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+    <div class="process-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
       <div style="padding:28px;background:#fff;border:1px solid #dde6ed;border-radius:8px;">
         <div style="width:36px;height:36px;background:#0d2137;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
           <span style="font-size:16px;font-weight:700;color:#0f9d8c;">1</span>

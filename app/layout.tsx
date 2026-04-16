@@ -27,8 +27,6 @@ export default function RootLayout({
     <ClerkProvider
       signInUrl="/sign-in"
       signUpUrl="/sign-up"
-      afterSignInUrl="/dashboard"
-      afterSignUpUrl="/dashboard"
     >
       <html lang="en">
         <body style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>

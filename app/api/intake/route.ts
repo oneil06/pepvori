@@ -1,15 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { auth } from '@clerk/nextjs/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { sendIntakeConfirmation, sendPhysicianAlert } from '@/lib/resend'
 
 export async function POST(req: NextRequest) {
   try {
-    const { userId } = await auth()
-    if (!userId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
     const body = await req.json()
     const { step, data } = body
 
@@ -19,7 +13,7 @@ export async function POST(req: NextRequest) {
     let { data: patient, error: patientError } = await db
       .from('patients')
       .select('id, email, first_name')
-      .eq('clerk_user_id', userId)
+      .eq('clerk_user_id', data.email)
       .single()
 
     if (patientError || !patient) {
@@ -27,7 +21,7 @@ export async function POST(req: NextRequest) {
       const { data: newPatient, error: createError } = await db
         .from('patients')
         .insert({
-          clerk_user_id: userId,
+          clerk_user_id: data.email,
           email: data.email,
           first_name: data.firstName,
           last_name: data.lastName,

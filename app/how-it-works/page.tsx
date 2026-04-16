@@ -1,8 +1,5 @@
-'use client'
-
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'How It Works — Pepvori',
@@ -49,7 +46,6 @@ const STEPS = [
 ]
 
 export default function HowItWorksPage() {
-  const router = useRouter()
   return (
     <>
       {/* PAGE HERO */}
@@ -67,8 +63,8 @@ export default function HowItWorksPage() {
               Three steps. No waiting rooms. A licensed physician reviews your health profile and prescribes your protocol — all online.
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-              <button className="cta-btn-primary" style={{ padding: '13px 28px', fontSize: 14 }} onClick={() => router.push('/intake')}>Begin Your Assessment</button>
-              <button style={{ background: 'transparent', color: '#0d2137', border: '1.5px solid #dde6ed', padding: '13px 28px', borderRadius: 4, fontSize: 14, fontWeight: 500, cursor: 'pointer', fontFamily: "'Outfit', sans-serif" }} onClick={() => router.push('/protocols')}>View Protocols</button>
+              <Link className="cta-btn-primary" style={{ padding: '13px 28px', fontSize: 14 }} href="/intake">Begin Your Assessment</Link>
+              <Link style={{ background: 'transparent', color: '#0d2137', border: '1.5px solid #dde6ed', padding: '13px 28px', borderRadius: 4, fontSize: 14, fontWeight: 500, cursor: 'pointer', fontFamily: "'Outfit', sans-serif" }} href="/protocols">View Protocols</Link>
             </div>
           </div>
 
@@ -223,8 +219,8 @@ export default function HowItWorksPage() {
           Complete your intake in under 10 minutes. A physician confirms your protocol within 24 hours.
         </p>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button className="cta-btn-primary" onClick={() => router.push('/intake')}>Begin Your Assessment</button>
-          <button className="cta-btn-ghost" onClick={() => router.push('/pricing')}>View pricing</button>
+          <Link className="cta-btn-primary" href="/intake">Begin Your Assessment</Link>
+          <Link className="cta-btn-ghost" href="/pricing">View pricing</Link>
         </div>
       </section>
     </>

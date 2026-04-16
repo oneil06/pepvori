@@ -1,8 +1,5 @@
-'use client'
-
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'About — Pepvori',
@@ -10,7 +7,6 @@ export const metadata: Metadata = {
 }
 
 export default function AboutPage() {
-  const router = useRouter()
   return (
     <>
       {/* BANNER */}
@@ -195,8 +191,8 @@ export default function AboutPage() {
           Your first step is a 10-minute assessment. A physician reviews your profile within 24 hours.
         </p>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button className="cta-btn-primary" onClick={() => router.push('/intake')}>Begin Your Assessment</button>
-          <button className="cta-btn-ghost" onClick={() => router.push('/physicians')}>Meet our physicians</button>
+          <Link className="cta-btn-primary" href="/intake">Begin Your Assessment</Link>
+          <Link className="cta-btn-ghost" href="/physicians">Meet our physicians</Link>
         </div>
       </section>
     </>

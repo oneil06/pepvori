@@ -1,8 +1,5 @@
-'use client'
-
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy — Pepvori',
@@ -10,7 +7,6 @@ export const metadata: Metadata = {
 }
 
 export default function PrivacyPage() {
-  const router = useRouter()
   return (
     <>
       <style>{`
@@ -51,7 +47,7 @@ export default function PrivacyPage() {
           <Link href="/protocols" className="nav-link">Protocols</Link>
           <Link href="/how-it-works" className="nav-link">How It Works</Link>
           <Link href="/pricing" className="nav-link">Pricing</Link>
-          <button className="nav-btn" onClick={() => router.push('/intake')}>Begin Intake</button>
+          <Link className="nav-btn" href="/intake">Begin Intake</Link>
         </div>
       </nav>
 

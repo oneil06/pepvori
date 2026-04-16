@@ -1,8 +1,5 @@
-'use client'
-
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Protocols — Pepvori',
@@ -65,7 +62,6 @@ const PROTOCOLS = [
 ]
 
 export default function ProtocolsPage() {
-  const router = useRouter()
   return (
     <>
       {/* PAGE HERO */}
@@ -164,12 +160,12 @@ export default function ProtocolsPage() {
                       <div style={{ fontSize: 16, fontWeight: 700, color: stat.label === 'Starting from' ? '#0f9d8c' : '#0d2137' }}>{stat.value}</div>
                     </div>
                   ))}
-                  <button style={{
+                  <Link style={{
                       width: '100%', background: 'transparent', color: '#0d2137',
                       border: '1.5px solid #dde6ed', padding: '10px', borderRadius: 4,
                       fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: "'Outfit', sans-serif",
                       marginTop: 'auto',
-                    }} onClick={() => router.push('/intake')}>Begin intake →</button>
+                    }} href="/intake">Begin intake →</Link>
                 </div>
               </div>
             ))}
@@ -188,7 +184,7 @@ export default function ProtocolsPage() {
             <p style={{ fontSize: 15, color: '#3d5a73', lineHeight: 1.85, fontWeight: 300, marginBottom: 28 }}>
               Take our 10-minute assessment and a licensed physician will recommend the protocol best matched to your biology, goals, and health history. You&apos;re not locked in — protocols can be adjusted at any time.
             </p>
-            <button className="cta-btn-primary" style={{ fontSize: 14 }} onClick={() => router.push('/intake')}>Take the assessment →</button>
+            <Link className="cta-btn-primary" style={{ fontSize: 14 }} href="/intake">Take the assessment →</Link>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
             {[
@@ -220,8 +216,8 @@ export default function ProtocolsPage() {
           Complete your intake in under 10 minutes. A physician confirms your protocol within 24 hours.
         </p>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button className="cta-btn-primary" onClick={() => router.push('/intake')}>Begin Your Assessment</button>
-          <button className="cta-btn-ghost" onClick={() => router.push('/pricing')}>View pricing</button>
+          <Link className="cta-btn-primary" href="/intake">Begin Your Assessment</Link>
+          <Link className="cta-btn-ghost" href="/pricing">View pricing</Link>
         </div>
       </section>
     </>

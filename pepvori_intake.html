@@ -68,6 +68,10 @@ a{text-decoration:none;}
   .nav-links a,.nav-links button{color:#0d2137!important;width:100%;text-align:left;padding:16px 24px!important;font-size:15px!important;border-radius:0!important;border-bottom:1px solid #f0f4f7;box-sizing:border-box;}
   .nav-links .nav-btn{background:none!important;color:#0d2137!important;font-weight:600!important;border-bottom:1px solid #f0f4f7;}
   .hamburger{display:flex!important;flex-direction:column;justify-content:center;gap:5px;}
+  /* INTAKE PAGE */
+  .intake-stats-bar{grid-template-columns:repeat(2,1fr)!important;padding:20px!important;}
+  .intake-stats-bar > div{border-right:none!important;border-bottom:1px solid #dde6ed;padding:12px 0!important;}
+  .intake-plan-cards{grid-template-columns:1fr!important;}
 }
 </style>
 </head>
@@ -320,7 +324,7 @@ a{text-decoration:none;}
       </div>
 
       <!-- Quick stats -->
-      <div style="padding:28px 48px;border-bottom:1px solid #dde6ed;display:grid;grid-template-columns:repeat(4,1fr);gap:0;">
+      <div class="intake-stats-bar" style="padding:28px 48px;border-bottom:1px solid #dde6ed;display:grid;grid-template-columns:repeat(4,1fr);gap:0;">
         <div style="text-align:center;padding:0 16px;border-right:1px solid #dde6ed;">
           <div style="font-size:11px;color:#7a9bb0;margin-bottom:4px;">Results timeline</div>
           <div style="font-size:15px;font-weight:700;color:#0d2137;" id="result-timeline">2–4 weeks</div>
@@ -343,7 +347,7 @@ a{text-decoration:none;}
       <div style="padding:36px 48px;border-bottom:1px solid #dde6ed;">
         <div style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0f9d8c;margin-bottom:6px;">Choose your plan</div>
         <p style="font-size:13px;color:#7a9bb0;margin-bottom:20px;">All plans include physician consultation, prescription, and monthly fulfilment.</p>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;" id="plan-cards">
+        <div class="intake-plan-cards" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;" id="plan-cards">
           <!-- Populated by JS -->
         </div>
       </div>

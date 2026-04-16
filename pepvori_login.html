@@ -29,14 +29,22 @@ a{text-decoration:none;color:inherit;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .fade-up{animation:fadeUp .5s ease both;}
 </style>
+<style>
+@media(max-width:768px){
+  .login-split{flex-direction:column!important;min-height:100vh;}
+  .login-brand{display:none!important;}
+  .login-form-panel{padding:32px 20px!important;width:100%!important;}
+  .login-card{padding:28px 20px!important;width:100%!important;box-sizing:border-box!important;}
+}
+</style>
 </head>
 <body>
 
 <!-- Split layout: left brand panel + right form -->
-<div style="display:flex;min-height:100vh;">
+<div class="login-split" style="display:flex;min-height:100vh;">
 
   <!-- LEFT — brand -->
-  <div style="width:420px;flex-shrink:0;background:#0d2137;display:flex;flex-direction:column;justify-content:space-between;padding:48px 44px;position:relative;overflow:hidden;">
+  <div class="login-brand" style="width:420px;flex-shrink:0;background:#0d2137;display:flex;flex-direction:column;justify-content:space-between;padding:48px 44px;position:relative;overflow:hidden;">
     <!-- Background texture rings -->
     <div style="position:absolute;bottom:-120px;left:-120px;width:480px;height:480px;border-radius:50%;border:1px solid rgba(255,255,255,.04);pointer-events:none;"></div>
     <div style="position:absolute;bottom:-60px;left:-60px;width:320px;height:320px;border-radius:50%;border:1px solid rgba(255,255,255,.05);pointer-events:none;"></div>
@@ -69,10 +77,10 @@ a{text-decoration:none;color:inherit;}
   </div>
 
   <!-- RIGHT — form -->
-  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:48px 32px;background:#f0f4f7;">
+  <div class="login-form-panel" style="flex:1;display:flex;align-items:center;justify-content:center;padding:48px 32px;background:#f0f4f7;">
     <div class="fade-up" style="width:100%;max-width:420px;">
 
-      <div style="background:#fff;border:1px solid #dde6ed;border-radius:12px;padding:40px 36px;">
+      <div class="login-card" style="background:#fff;border:1px solid #dde6ed;border-radius:12px;padding:40px 36px;">
         <h1 class="s" style="font-size:34px;font-weight:400;color:#0d2137;margin-bottom:6px;">Welcome back.</h1>
         <p style="font-size:14px;color:#7a9bb0;margin-bottom:28px;">Sign in to your patient portal.</p>
 

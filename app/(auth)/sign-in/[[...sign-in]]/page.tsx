@@ -94,7 +94,7 @@ export default function SignInPage() {
                   footerActionLink: { color: '#0f9d8c', fontWeight: '600' },
                 },
               }}
-              redirectUrl="/dashboard"
+              forceRedirectUrl="/dashboard"
               signUpUrl="/sign-up"
             />
             <p style={{textAlign:'center',fontSize:'12px',color:'#b3c5d2',marginTop:'20px',lineHeight:1.7}}>

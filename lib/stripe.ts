@@ -2,7 +2,7 @@ import Stripe from 'stripe'
 import { loadStripe } from '@stripe/stripe-js'
 
 // Server-side Stripe client
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? 'placeholder', {
   apiVersion: '2026-03-25.dahlia',
 })
 

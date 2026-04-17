@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Medical Consent — Pepvori</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Outfit',sans-serif;background:#fff;color:#0d2137;overflow-x:hidden;font-size:14px;}
+.s{font-family:'Cormorant Garamond',serif;}
+a{text-decoration:none;color:#0f9d8c;}
+a:hover{text-decoration:underline;}
+.nav-link{color:#3d5a73;font-size:13px;font-weight:500;letter-spacing:0.04em;text-decoration:none;position:relative;padding-bottom:2px;transition:color .2s;}
+.nav-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1.5px;background:#0f9d8c;border-radius:2px;transition:width .35s ease-in-out;}
+.nav-link:hover{color:#0d2137;}.nav-link:hover::after{width:100%;}
+.nav-btn{background:#0f9d8c;color:#fff;border:none;padding:9px 22px;border-radius:4px;font-size:13px;font-weight:600;cursor:pointer;transition:background .4s,box-shadow .4s;}
+.nav-btn:hover{background:#0b8578;}
+.prose h2{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;color:#0d2137;margin:40px 0 12px;}
+.prose h3{font-size:15px;font-weight:600;color:#0d2137;margin:24px 0 8px;}
+.prose p{font-size:14px;color:#3d5a73;line-height:1.85;margin-bottom:14px;}
+.prose ul{margin:0 0 14px 20px;display:flex;flex-direction:column;gap:6px;}
+.prose ul li{font-size:14px;color:#3d5a73;line-height:1.7;}
+.toc-link{display:block;font-size:13px;color:#7a9bb0;padding:7px 0;border-bottom:1px solid #f0f4f7;transition:color .2s;text-decoration:none;}
+.toc-link:hover{color:#0f9d8c;text-decoration:none;}
+.toc-link.active{color:#0f9d8c;font-weight:600;}
+@media(max-width:768px){
+  nav{padding:0 20px !important;}
+  .hero-pad{padding:56px 24px 44px !important;}
+  .legal-body{grid-template-columns:1fr !important;padding:40px 24px !important;}
+  .toc-sidebar{display:none !important;}
+  footer{padding:48px 24px 32px !important;}
+  .footer-grid{grid-template-columns:1fr 1fr !important;gap:32px !important;}
+}
+
+/* Footer link hover effects */
+footer a{transition:color .25s ease;}
+footer a:hover{color:rgba(255,255,255,.9)!important;}
+</style>
+<style>
+/* ── PEPVORI MOBILE NAV ── */
+.hamburger{display:none;}
+.nav-links{display:none;}
+@media(max-width:768px){
+  nav{padding:0 20px!important;}
+  .nav-links-desktop{display:none!important;}
+  .nav-links{display:none;position:fixed;top:64px;left:0;right:0;bottom:0;background:#fff;flex-direction:column;gap:0;padding:24px 0;z-index:9999;overflow-y:auto;}
+  .nav-links.open{display:flex!important;flex-direction:column!important;}
+  .nav-links a,.nav-links button{color:#0d2137!important;width:100%;text-align:left;padding:16px 24px!important;font-size:15px!important;border-radius:0!important;border-bottom:1px solid #f0f4f7;box-sizing:border-box;}
+  .nav-links .nav-btn{background:none!important;color:#0d2137!important;font-weight:600!important;border-bottom:1px solid #f0f4f7;}
+  .hamburger{display:flex!important;flex-direction:column;justify-content:center;gap:5px;}
+  /* LEGAL PAGES */
+  h1.s{font-size:32px!important;line-height:1.1!important;}
+  .hero-pad{padding:48px 20px 36px!important;}
+  .legal-body{grid-template-columns:1fr!important;padding:32px 20px 64px!important;}
+  .legal-body > *:first-child{display:none!important;}
+  footer{padding:48px 20px 32px!important;}
+  .footer-grid{grid-template-columns:1fr 1fr!important;gap:32px!important;}
+}
+</style>
+</head>
+<body>
+
+<nav style="position:sticky;top:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 56px;background:rgba(255,255,255,.97);border-bottom:1px solid #dde6ed;backdrop-filter:blur(16px);">
+  <a href="pepvori_landing_page_preview.html" style="text-decoration:none;">
+    <span class="s" style="font-size:22px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#0d2137;">PEP<span style="color:#0f9d8c">VORI</span></span>
+  </a>
+  <div class="nav-links-desktop" style="display:flex;gap:28px;align-items:center;">
+    <a href="pepvori_protocols.html" class="nav-link">Protocols</a>
+    <a href="pepvori_how_it_works.html" class="nav-link">How It Works</a>
+    <a href="pepvori_pricing.html" class="nav-link">Pricing</a>
+    <a href="pepvori_about.html" class="nav-link">About</a>
+    <a href="pepvori_contact.html" class="nav-link">Contact</a>
+    <button class="nav-btn" onclick="window.location.href='pepvori_intake.html'">Begin Intake</button>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu" style="flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;">
+    <span id="hb1" style="display:block;width:22px;height:2px;background:#0d2137;border-radius:2px;transition:all .3s;"></span>
+    <span id="hb2" style="display:block;width:22px;height:2px;background:#0d2137;border-radius:2px;transition:all .3s;"></span>
+    <span id="hb3" style="display:block;width:22px;height:2px;background:#0d2137;border-radius:2px;transition:all .3s;"></span>
+  </button>
+</nav>
+<!-- Mobile nav drawer -->
+<div class="nav-links" id="mobileMenu">
+  <a href="pepvori_protocols.html" class="nav-link">Protocols</a>
+  <a href="pepvori_how_it_works.html" class="nav-link">How It Works</a>
+  <a href="pepvori_pricing.html" class="nav-link">Pricing</a>
+  <a href="pepvori_about.html" class="nav-link">About</a>
+  <a href="pepvori_contact.html" class="nav-link">Contact</a>
+  <button class="nav-btn" onclick="window.location.href='pepvori_intake.html';toggleMenu()">Begin Intake</button>
+</div>
+
+<div style="padding:16px 56px;background:#fff;border-bottom:1px solid #dde6ed;">
+  <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:8px;">
+    <a href="pepvori_landing_page_preview.html" style="font-size:13px;color:#7a9bb0;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#0f9d8c'" onmouseout="this.style.color='#7a9bb0'">Home</a>
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#dde6ed" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+    <span style="font-size:13px;color:#0d2137;font-weight:500;">Medical Consent</span>
+  </div>
+</div>
+
+<div style="background:#0d2137;">
+  <div class="hero-pad" style="max-width:800px;margin:0 auto;padding:64px 56px 52px;">
+    <h1 class="s" style="font-size:50px;font-weight:300;line-height:1.05;color:#fff;margin-bottom:14px;">Medical Consent</h1>
+    <p style="font-size:14px;color:rgba(255,255,255,.38);line-height:1.7;">Last updated: January 15, 2026 &nbsp;·&nbsp; Effective: January 15, 2026</p>
+  </div>
+</div>
+
+<div class="legal-body" style="display:grid;grid-template-columns:220px 1fr;gap:56px;max-width:1080px;margin:0 auto;padding:64px 56px 96px;align-items:start;">
+
+  <div class="toc-sidebar" style="position:sticky;top:84px;">
+    <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#b3c5d2;margin-bottom:12px;">On this page</div>
+    <a href="#overview" class="toc-link">Overview</a>
+    <a href="#telehealth" class="toc-link">Telehealth consent</a>
+    <a href="#treatment" class="toc-link">Treatment consent</a>
+    <a href="#risks" class="toc-link">Risks & alternatives</a>
+    <a href="#compounded" class="toc-link">Compounded medications</a>
+    <a href="#voluntary" class="toc-link">Voluntary participation</a>
+    <a href="#records" class="toc-link">Medical records</a>
+    <a href="#withdrawal" class="toc-link">Right to withdraw</a>
+    <a href="#contact" class="toc-link">Questions</a>
+    <div style="margin-top:24px;padding-top:20px;border-top:1px solid #dde6ed;">
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#b3c5d2;margin-bottom:12px;">Related</div>
+      <a href="pepvori_privacy.html" class="toc-link">Privacy Policy</a>
+      <a href="pepvori_hipaa.html" class="toc-link">HIPAA Notice</a>
+      <a href="pepvori_terms.html" class="toc-link">Terms of Service</a>
+    </div>
+  </div>
+
+  <div class="prose">
+
+    <div id="overview" style="background:#f7f9fb;border:1px solid #dde6ed;border-left:3px solid #0f9d8c;border-radius:0 8px 8px 0;padding:20px 24px;margin-bottom:32px;">
+      <p style="margin:0;font-size:13px;color:#3d5a73;line-height:1.7;"><strong style="color:#0d2137;">Summary:</strong> This document explains your rights and what you are consenting to when you use Pepvori's services. You have the right to ask questions, refuse treatment, and withdraw at any time. All clinical care is provided by independent licensed physicians — not Pepvori.</p>
+    </div>
+
+    <h2 id="telehealth">1. Consent to telehealth services</h2>
+    <p>By completing your intake and scheduling a consultation, you consent to receiving healthcare services via telehealth (remote video or asynchronous messaging). You understand that:</p>
+    <ul>
+      <li>Telehealth involves the delivery of healthcare services using electronic communications and does not involve an in-person examination</li>
+      <li>Your physician may determine that telehealth is not appropriate for your specific situation and may refer you to an in-person provider</li>
+      <li>The quality and completeness of care may differ from in-person evaluation</li>
+      <li>Technical failures may interrupt or prevent a consultation from occurring</li>
+      <li>All telehealth sessions are conducted by independent licensed physicians, not Pepvori employees</li>
+    </ul>
+
+    <h2 id="treatment">2. Consent to treatment</h2>
+    <p>If your assigned physician determines that peptide therapy is appropriate, you consent to:</p>
+    <ul>
+      <li>Receiving a prescription for one or more compounded peptide medications</li>
+      <li>Self-administration of medications as instructed (which may include subcutaneous injections, oral capsules, or nasal sprays depending on your protocol)</li>
+      <li>Ongoing physician monitoring through portal check-ins and follow-up consultations</li>
+      <li>Your physician sharing relevant clinical information with Pepvori's care coordination team for logistics purposes</li>
+    </ul>
+    <p>You understand that no prescription will be issued without your physician's independent clinical judgment, and that you may decline any recommended treatment at any time.</p>
+
+    <h2 id="risks">3. Risks & alternatives</h2>
+    <p>You acknowledge that peptide therapy, like all medical treatments, carries potential risks including but not limited to:</p>
+    <ul>
+      <li>Injection site reactions (redness, swelling, bruising)</li>
+      <li>Nausea, fatigue, or other systemic effects depending on the specific peptide</li>
+      <li>Interactions with existing medications or conditions</li>
+      <li>Unknown long-term effects, as research on some peptides is still evolving</li>
+    </ul>
+    <p>Your physician will discuss specific risks and alternatives relevant to your protocol during your consultation. You are encouraged to ask questions and disclose all current medications and health conditions during your intake and consultation.</p>
+
+    <h2 id="compounded">4. Compounded medications</h2>
+    <p>You understand and acknowledge that:</p>
+    <ul>
+      <li>Compounded medications are prepared by licensed compounding pharmacies and are not FDA-approved as finished drug products</li>
+      <li>Compounding pharmacies operate under state pharmacy board regulation and, where applicable, comply with USP standards</li>
+      <li>The safety, efficacy, and quality of compounded medications are not evaluated by the FDA in the same manner as commercially manufactured drugs</li>
+      <li>You have been offered the opportunity to ask questions about your specific medications prior to use</li>
+    </ul>
+
+    <h2 id="voluntary">5. Voluntary participation</h2>
+    <p>Your participation in Pepvori's program is entirely voluntary. You are under no obligation to proceed with any recommended treatment. Refusing treatment will not affect your ability to continue using the platform for informational purposes, and you may cancel your membership at any time per our <a href="pepvori_terms.html">Terms of Service</a>.</p>
+
+    <h2 id="records">6. Medical records</h2>
+    <p>You consent to your independent physician creating, maintaining, and retaining medical records related to your care. These records are subject to your rights under HIPAA and applicable state law. You may request a copy of your records at any time by contacting your physician's office or our care team.</p>
+    <p>Records are retained for a minimum of seven (7) years following your last treatment, or longer where required by state law.</p>
+
+    <h2 id="withdrawal">7. Right to withdraw consent</h2>
+    <p>You may withdraw this consent at any time by notifying your physician or contacting Pepvori's care team. Withdrawal does not affect the lawfulness of any treatment or services already provided. Following withdrawal, your physician will discuss any clinical implications with you.</p>
+
+    <h2 id="contact">8. Questions</h2>
+    <p>If you have questions about this Medical Consent form before or after completing your intake, please contact us at <a href="mailto:hello@pepvori.com">hello@pepvori.com</a> or through our <a href="pepvori_contact.html">contact page</a>. Your physician is also available to answer clinical questions during your consultation.</p>
+
+    <div style="margin-top:40px;padding-top:32px;border-top:1px solid #dde6ed;display:flex;gap:12px;flex-wrap:wrap;">
+      <a href="pepvori_privacy.html" style="display:inline-flex;align-items:center;gap:6px;background:#f7f9fb;border:1px solid #dde6ed;border-radius:6px;padding:10px 16px;font-size:13px;color:#3d5a73;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='#b3e0db'" onmouseout="this.style.borderColor='#dde6ed'">Privacy Policy →</a>
+      <a href="pepvori_hipaa.html" style="display:inline-flex;align-items:center;gap:6px;background:#f7f9fb;border:1px solid #dde6ed;border-radius:6px;padding:10px 16px;font-size:13px;color:#3d5a73;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='#b3e0db'" onmouseout="this.style.borderColor='#dde6ed'">HIPAA Notice →</a>
+      <a href="pepvori_terms.html" style="display:inline-flex;align-items:center;gap:6px;background:#f7f9fb;border:1px solid #dde6ed;border-radius:6px;padding:10px 16px;font-size:13px;color:#3d5a73;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='#b3e0db'" onmouseout="this.style.borderColor='#dde6ed'">Terms of Service →</a>
+    </div>
+  </div>
+</div>
+
+<footer style="background:#09192a;padding:60px 56px 40px;">
+  <div class="footer-grid" style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:44px;margin-bottom:40px;">
+    <div>
+      <a href="pepvori_landing_page_preview.html" style="text-decoration:none;"><div class="s" style="font-size:20px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#fff;margin-bottom:12px;">PEP<span style="color:#0f9d8c">VORI</span></div></a>
+      <p style="font-size:13px;color:rgba(255,255,255,.3);line-height:1.8;max-width:200px;">Physician-guided peptide therapy. Personalized protocols built around your biology.</p>
+    </div>
+    <div>
+      <div style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,.26);margin-bottom:14px;">Protocols</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="pepvori_protocol_recovery.html" style="color:rgba(255,255,255,.42);font-size:13px;">Recovery & Repair</a>
+        <a href="pepvori_protocol_growth.html" style="color:rgba(255,255,255,.42);font-size:13px;">Growth & Strength</a>
+        <a href="pepvori_protocol_longevity.html" style="color:rgba(255,255,255,.42);font-size:13px;">Longevity Protocol</a>
+        <a href="pepvori_protocol_sleep.html" style="color:rgba(255,255,255,.42);font-size:13px;">Focus & Sleep</a>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,.26);margin-bottom:14px;">Company</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="pepvori_about.html" style="color:rgba(255,255,255,.42);font-size:13px;">About</a>
+        <a href="pepvori_physicians.html" style="color:rgba(255,255,255,.42);font-size:13px;">Our Physicians</a>
+        
+        <a href="pepvori_contact.html" style="color:rgba(255,255,255,.42);font-size:13px;">Contact</a>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,.26);margin-bottom:14px;">Legal</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="pepvori_privacy.html" style="color:rgba(255,255,255,.42);font-size:13px;">Privacy Policy</a>
+        <a href="pepvori_terms.html" style="color:rgba(255,255,255,.42);font-size:13px;">Terms of Service</a>
+        <a href="pepvori_medical_consent.html" style="color:#0f9d8c;font-size:13px;font-weight:500;">Medical Consent</a>
+        <a href="pepvori_hipaa.html" style="color:rgba(255,255,255,.42);font-size:13px;">HIPAA Notice</a>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:space-between;padding-top:22px;border-top:1px solid rgba(255,255,255,.07);font-size:12px;color:rgba(255,255,255,.2);flex-wrap:wrap;gap:8px;">
+    <span>© 2026 Pepvori. All rights reserved.</span>
+    <span>Precision peptide therapy, delivered.</span>
+  </div>
+  <div style="font-size:11px;color:rgba(255,255,255,.14);max-width:700px;margin-top:16px;line-height:1.7;padding-top:16px;border-top:1px solid rgba(255,255,255,.05);">* Compounded medications are not FDA-approved. Prescriptions issued only after consultation with an independent licensed physician. Results may vary. All medical care provided by independent licensed providers.</div>
+</footer>
+
+<script>
+const tocLinks = document.querySelectorAll('.toc-link');
+const sectionIds = [...tocLinks].map(l => l.getAttribute('href').replace('#','')).filter(id => document.getElementById(id));
+function updateActive() {
+  const scrollY = window.scrollY + 120;
+  let current = sectionIds[0];
+  sectionIds.forEach(id => { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top + window.scrollY <= scrollY) current = id; });
+  tocLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+}
+window.addEventListener('scroll', updateActive, {passive:true});
+updateActive();
+</script>
+<script>
+function toggleMenu(){
+  const links = document.querySelector('.nav-links');
+  const h1 = document.getElementById('hb1');
+  const h2 = document.getElementById('hb2');
+  const h3 = document.getElementById('hb3');
+  const open = links.classList.toggle('open');
+  h2.style.opacity = open ? '0' : '1';
+  h1.style.transform = open ? 'translateY(7px) rotate(45deg)' : '';
+  h3.style.transform = open ? 'translateY(-7px) rotate(-45deg)' : '';
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+document.querySelectorAll('.nav-links a, .nav-links button').forEach(el => {
+  el.addEventListener('click', () => {
+    document.querySelector('.nav-links').classList.remove('open');
+    document.body.style.overflow = '';
+  });
+});
+</script>
+</body>
+</html>

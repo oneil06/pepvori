@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Clinical Intake — Pepvori</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Outfit',sans-serif;background:#f7f9fb;color:#0d2137;min-height:100vh;font-size:14px;}
+.s{font-family:'Cormorant Garamond',serif;}
+
+.nav-link{color:#3d5a73;font-size:13px;font-weight:500;letter-spacing:0.04em;text-decoration:none;position:relative;padding-bottom:2px;transition:color .2s;}
+.nav-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1.5px;background:#0f9d8c;border-radius:2px;transition:width .35s ease-in-out;}
+.nav-link:hover{color:#0d2137;}.nav-link:hover::after{width:100%;}
+
+.progress-track{height:3px;background:#dde6ed;border-radius:3px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,#0f9d8c,#0b8578);border-radius:3px;transition:width .5s cubic-bezier(0.4,0,0.2,1);}
+
+.step{display:none;animation:slideIn .4s ease both;}
+.step.active{display:block;}
+@keyframes slideIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.step-card{background:#fff;border-radius:12px;border:1px solid #dde6ed;padding:48px;max-width:680px;width:100%;margin:0 auto;}
+
+/* Option buttons */
+.option-btn{width:100%;text-align:left;background:#fff;border:1.5px solid #dde6ed;border-radius:8px;padding:14px 18px;cursor:pointer;transition:all .3s ease-in-out;display:flex;align-items:center;gap:12px;font-family:'Outfit',sans-serif;}
+.option-btn:hover{border-color:#0f9d8c;background:#f0faf9;}
+.option-btn.selected{border-color:#0f9d8c;background:#e6f5f3;}
+.option-btn.selected .check{background:#0f9d8c;border-color:#0f9d8c;}
+.option-btn .check{width:18px;height:18px;border-radius:50%;border:1.5px solid #dde6ed;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .3s ease-in-out;}
+
+/* Multi-select */
+.multi-btn{width:100%;text-align:left;background:#fff;border:1.5px solid #dde6ed;border-radius:8px;padding:14px 18px;cursor:pointer;transition:all .3s ease-in-out;display:flex;align-items:center;gap:12px;font-family:'Outfit',sans-serif;}
+.multi-btn:hover{border-color:#0f9d8c;background:#f0faf9;}
+.multi-btn.selected{border-color:#0f9d8c;background:#e6f5f3;}
+.multi-btn .check-sq{width:18px;height:18px;border-radius:4px;border:1.5px solid #dde6ed;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .3s ease-in-out;}
+.multi-btn.selected .check-sq{background:#0f9d8c;border-color:#0f9d8c;}
+
+/* Text input */
+.text-input{width:100%;border:1.5px solid #dde6ed;border-radius:8px;padding:14px 16px;font-size:14px;font-family:'Outfit',sans-serif;color:#0d2137;background:#fff;transition:border-color .3s;outline:none;}
+.text-input:focus{border-color:#0f9d8c;}
+.text-input::placeholder{color:#b3c5d0;}
+
+/* Textarea */
+textarea.text-input{resize:vertical;min-height:100px;line-height:1.6;}
+
+/* Toggle yes/no */
+.yn-btn{flex:1;padding:14px;border-radius:8px;border:1.5px solid #dde6ed;background:#fff;cursor:pointer;font-family:'Outfit',sans-serif;font-size:14px;font-weight:500;transition:all .3s ease-in-out;color:#3d5a73;}
+.yn-btn:hover{border-color:#0f9d8c;color:#0f9d8c;}
+.yn-btn.selected-yes{border-color:#0f9d8c;background:#e6f5f3;color:#0b8578;font-weight:600;}
+.yn-btn.selected-no{border-color:#0d2137;background:#f7f9fb;color:#0d2137;font-weight:600;}
+
+/* CTA buttons */
+.btn-primary{background:#0f9d8c;color:#fff;border:none;padding:14px 32px;border-radius:4px;font-size:14px;font-weight:600;cursor:pointer;transition:background .4s ease-in-out,box-shadow .4s ease-in-out;font-family:'Outfit',sans-serif;}
+.btn-primary:hover{background:#0b8578;}
+.btn-primary:disabled{background:#b3e0db;cursor:not-allowed;box-shadow:none;}
+.btn-ghost{background:transparent;color:#7a9bb0;border:1.5px solid #dde6ed;padding:14px 32px;border-radius:4px;font-size:14px;font-weight:500;cursor:pointer;transition:all .3s ease-in-out;font-family:'Outfit',sans-serif;}
+.btn-ghost:hover{border-color:#0d2137;color:#0d2137;}
+
+/* Warning box */
+.warning-box{background:#fff8e6;border:1px solid #f5c842;border-radius:8px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;}
+
+/* Confirmation screen */
+.conf-check{width:72px;height:72px;background:#e6f5f3;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;}
+
+a{text-decoration:none;}
+
+/* Footer link hover effects */
+footer a{transition:color .25s ease;}
+footer a:hover{color:rgba(255,255,255,.9)!important;}
+</style>
+<style>
+/* ── PEPVORI MOBILE NAV ── */
+.hamburger{display:none;}
+.nav-links{display:none;}
+@media(max-width:768px){
+  nav{padding:0 20px!important;}
+  .nav-links-desktop{display:none!important;}
+  .nav-links{display:none;position:fixed;top:64px;left:0;right:0;bottom:0;background:#fff;flex-direction:column;gap:0;padding:24px 0;z-index:9999;overflow-y:auto;}
+  .nav-links.open{display:flex!important;flex-direction:column!important;}
+  .nav-links a,.nav-links button{color:#0d2137!important;width:100%;text-align:left;padding:16px 24px!important;font-size:15px!important;border-radius:0!important;border-bottom:1px solid #f0f4f7;box-sizing:border-box;}
+  .nav-links .nav-btn{background:none!important;color:#0d2137!important;font-weight:600!important;border-bottom:1px solid #f0f4f7;}
+  .hamburger{display:flex!important;flex-direction:column;justify-content:center;gap:5px;}
+
+  /* INTAKE 2 PAGE */
+  .intake2-form-grid{grid-template-columns:1fr!important;}
+  div[style*="padding:0 56px"]{padding:0 20px!important;}
+  div[style*="padding:56px"]{padding:40px 20px!important;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav style="height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 56px;background:rgba(255,255,255,.97);border-bottom:1px solid #dde6ed;">
+  <a href="pepvori_landing_page_preview.html">
+    <span class="s" style="font-size:22px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#0d2137;">PEP<span style="color:#0f9d8c">VORI</span></span>
+  </a>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div style="font-size:12px;color:#7a9bb0;">Secure & HIPAA compliant</div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
+      <span style="font-size:12px;font-weight:600;color:#0f9d8c;">256-bit encrypted</span>
+    </div>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu" style="flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;">
+    <span id="hb1" style="display:block;width:22px;height:2px;background:#0d2137;border-radius:2px;transition:all .3s;"></span>
+    <span id="hb2" style="display:block;width:22px;height:2px;background:#0d2137;border-radius:2px;transition:all .3s;"></span>
+    <span id="hb3" style="display:block;width:22px;height:2px;background:#0d2137;border-radius:2px;transition:all .3s;"></span>
+  </button>
+</nav>
+<!-- Mobile nav drawer -->
+<div class="nav-links" id="mobileMenu">
+  <a href="pepvori_protocols.html" class="nav-link">Protocols</a>
+  <a href="pepvori_how_it_works.html" class="nav-link">How It Works</a>
+  <a href="pepvori_pricing.html" class="nav-link">Pricing</a>
+  <a href="pepvori_about.html" class="nav-link">About</a>
+  <a href="pepvori_contact.html" class="nav-link">Contact</a>
+  <button class="nav-btn" onclick="window.location.href='pepvori_intake.html';toggleMenu()">Begin Intake</button>
+</div>
+
+<!-- PROTOCOL CONTEXT BANNER -->
+<div style="background:#0d2137;padding:14px 56px;">
+  <div style="max-width:680px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div style="width:8px;height:8px;background:#0f9d8c;border-radius:50%;"></div>
+      <span style="font-size:13px;color:rgba(255,255,255,.6);">Selected protocol:</span>
+      <span style="font-size:13px;font-weight:600;color:#fff;" id="banner-protocol">Recovery & Repair</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span style="font-size:12px;color:rgba(255,255,255,.4);">Plan:</span>
+      <span style="font-size:12px;font-weight:600;color:#b3e0db;" id="banner-plan">Accelerate — $249/mo</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div style="min-height:calc(100vh - 100px);padding:40px 24px 80px;display:flex;flex-direction:column;align-items:center;">
+
+  <!-- Progress header -->
+  <div style="max-width:680px;width:100%;margin-bottom:28px;" id="intake2-header">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+      <div>
+        <div style="font-size:11px;font-weight:600;color:#7a9bb0;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:2px;">Clinical Intake</div>
+        <div style="font-size:12px;font-weight:600;color:#0f9d8c;" id="step2-label">Step 1 of 10</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:12px;color:#7a9bb0;" id="step2-pct">10% complete</div>
+        <div style="font-size:11px;color:#b3e0db;margin-top:1px;">~4 minutes remaining</div>
+      </div>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress2-bar" style="width:10%;"></div>
+    </div>
+  </div>
+
+  <!-- Q1: Full name -->
+  <div class="step active" id="s2-1">
+    <div class="step-card">
+      <div style="margin-bottom:8px;"><span style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0f9d8c;">Personal details</span></div>
+      <h2 class="s" style="font-size:34px;font-weight:400;color:#0d2137;margin-bottom:8px;line-height:1.1;">What's your full name?</h2>
+      <p style="font-size:14px;color:#7a9bb0;margin-bottom:28px;line-height:1.6;">Your physician will use this to personalise your consultation and prescription.</p>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div>
+          <label style="font-size:12px;font-weight:600;color:#3d5a73;margin-bottom:6px;display:block;">First name</label>
+          <input class="text-input" type="text" id="first-name" placeholder="e.g. Marcus" oninput="checkTextQ('s2-1','q2-1-next')"/>
+        </div>
+        <div>
+          <label style="font-size:12px;font-weight:600;color:#3d5a73;margin-bottom:6px;display:block;">Last name</label>
+          <input class="text-input" type="text" id="last-name" placeholder="e.g. Rodriguez" oninput="checkTextQ('s2-1','q2-1-next')"/>
+        </div>
+      </div>
+      <div style="margin-top:28px;display:flex;justify-content:flex-end;">
+        <button class="btn-primary" id="q2-1-next" disabled onclick="goTo2(2)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q2: Date of birth + sex -->
+  <div class="step" id="s2-2">
+    <div class="step-card">
+      <div style="margin-bottom:8px;"><span style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0f9d8c;">Personal details</span></div>
+      <h2 class="s" style="font-size:34px;font-weight:400;color:#0d2137;margin-bottom:8px;line-height:1.1;">Date of birth & biological sex</h2>
+      <p style="font-size:14px;color:#7a9bb0;margin-bottom:28px;line-height:1.6;">Hormonal profiles and peptide dosing differ between sexes and change with age. This information is essential for safe prescribing.</p>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div>
+          <label style="font-size:12px;font-weight:600;color:#3d5a73;margin-bottom:6px;display:block;">Date of birth</label>
+          <input class="text-input" type="date" id="dob" onchange="checkTextQ('s2-2','q2-2-next')" style="max-width:240px;"/>
+        </div>
+        <div>
+          <label style="font-size:12px;font-weight:600;color:#3d5a73;margin-bottom:8px;display:block;">Biological sex</label>
+          <div style="display:flex;gap:10px;" id="sex-options">
+            <button class="option-btn" onclick="selectSingle('sex','male',this)" style="flex:1;justify-content:center;">
+              <div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <span style="font-size:14px;font-weight:500;color:#0d2137;">Male</span>
+            </button>
+            <button class="option-btn" onclick="selectSingle('sex','female',this)" style="flex:1;justify-content:center;">
+              <div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <span style="font-size:14px;font-weight:500;color:#0d2137;">Female</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:28px;display:flex;justify-content:space-between;">
+        <button class="btn-ghost" onclick="goTo2(1)">← Back</button>
+        <button class="btn-primary" id="q2-2-next" disabled onclick="goTo2(3)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q3: Height, weight -->
+  <div class="step" id="s2-3">
+    <div class="step-card">
+      <div style="margin-bottom:8px;"><span style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0f9d8c;">Physical profile</span></div>
+      <h2 class="s" style="font-size:34px;font-weight:400;color:#0d2137;margin-bottom:8px;line-height:1.1;">Height & weight</h2>
+      <p style="font-size:14px;color:#7a9bb0;margin-bottom:28px;line-height:1.6;">Used by your physician to calculate appropriate dosing. All information is kept strictly confidential.</p>
+      <div class="intake2-form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div>
+          <label style="font-size:12px;font-weight:600;color:#3d5a73;margin-bottom:6px;display:block;">Height</label>
+          <div style="display:flex;gap:8px;">
+            <input class="text-input" type="number" id="height-ft" placeholder="ft" min="4" max="7" style="width:72px;" oninput="checkTextQ('s2-3','q2-3-next')"/>
+            <input class="text-input" type="number" id="height-in" placeholder="in" min="0" max="11" style="width:72px;" oninput="checkTextQ('s2-3','q2-3-next')"/>
+          </div>
+        </div>
+        <div>
+          <label style="font-size:12px;font-weight:600;color:#3d5a73;margin-bottom:6px;display:block;">Weight</label>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <input class="text-input" type="number" id="weight" placeholder="e.g. 185" style="width:110px;" oninput="checkTextQ('s2-3','q2-3-next')"/>
+            <span style="font-size:13px;color:#7a9bb0;">lbs</span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:28px;display:flex;justify-content:space-between;">
+        <button class="btn-ghost" onclick="goTo2(2)">← Back</button>
+        <button class="btn-primary" id="q2-3-next" disabled onclick="goTo2(4)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q4: Current medications -->
+  <div class="step" id="s2-4">
+    <div class="step-card">
+      <div style="margin-bottom:8px;"><span style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0f9d8c;">Medical history</span></div>
+      <h2 class="s" style="font-size:34px;font-weight:400;color:#0d2137;margin-bottom:8px;line-height:1.1;">Are you currently taking any medications?</h2>
+      <p style="font-size:14px;color:#7a9bb0;margin-bottom:24px;line-height:1.6;">Include prescription medications, over-the-counter drugs, and any hormones or TRT.</p>
+      <div style="display:flex;gap:10px;margin-bottom:20px;">
+        <button class="yn-btn" id="meds-yes" onclick="toggleYN('meds','yes')">Yes</button>
+        <button class="yn-btn" id="meds-no" onclick="toggleYN('meds','no')">No</button>
+      </div>
+      <div id="meds-detail" style="display:none;">
+        <label style="font-size:12px;font-weight:600;color:#3d5a73;margin-bottom:6px;display:block;">Please list them</label>
+        <textarea class="text-input" id="meds-list" placeholder="e.g. Metformin 500mg daily, Vitamin D3 5000 IU..." oninput="checkYNDetail('meds')"></textarea>
+        <p style="font-size:12px;color:#7a9bb0;margin-top:8px;">Include dosage if known. Your physician will review all interactions.</p>
+      </div>
+      <div style="margin-top:28px;display:flex;justify-content:space-between;">
+        <button class="btn-ghost" onclick="goTo2(3)">← Back</button>
+        <button class="btn-primary" id="q2-4-next" disabled onclick="goTo2(5)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q5: Medical conditions -->
+  <div class="step" id="s2-5">
+    <div class="step-card">
+      <div style="margin-bottom:8px;"><span style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0f9d8c;">Medical history</span></div>
+      <h2 class="s" style="font-size:34px;font-weight:400;color:#0d2137;margin-bottom:8px;line-height:1.1;">Do you have any diagnosed medical conditions?</h2>
+      <p style="font-size:14px;color:#7a9bb0;margin-bottom:24px;line-height:1.6;">Select all that apply. This helps your physician screen for contraindications.</p>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px;" id="conditions-list">
+        <button class="multi-btn" onclick="toggleMulti(this,'cancer')"><div class="check-sq"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:14px;font-weight:500;color:#0d2137;">Active or history of cancer</span></button>
+        <button class="multi-btn" onclick="toggleMulti(this,'diabetes')"><div class="check-sq"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:14px;font-weight:500;color:#0d2137;">Diabetes (Type 1 or 2)</span></button>
+        <button class="multi-btn" onclick="toggleMulti(this,'thyroid')"><div class="check-sq"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:14px;font-weight:500;color:#0d2137;">Thyroid disorder</span></button>
+        <button class="multi-btn" onclick="toggleMulti(this,'cardiovascular')"><div class="check-sq"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:14px;font-weight:500;color:#0d2137;">Cardiovascular disease or hypertension</span></button>
+        <button class="multi-btn" onclick="toggleMulti(this,'autoimmune')"><div class="check-sq"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:14px;font-weight:500;color:#0d2137;">Autoimmune condition</span></button>
+        <button class="multi-btn" onclick="toggleMulti(this,'hormonal')"><div class="check-sq"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:14px;font-weight:500;color:#0d2137;">Hormonal disorder (PCOS, hypogonadism, etc.)</span></button>
+        <button class="multi-btn" onclick="toggleMulti(this,'none')" id="conditions-none"><div class="check-sq"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:14px;font-weight:500;color:#0d2137;">None of the above</span></button>
+      </div>
+      <div style="margin-top:4px;display:flex;justify-content:space-between;">
+        <button class="btn-ghost" onclick="goTo2(4)">← Back</button>
+        <button class="btn-primary" id="q2-5-next" disabled onclick="goTo2(6)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q6: Allergies -->
+  <div class="step" id="s2-6">
+    <div class="step-card">
+      <div style="margin-bottom:8px;"><span style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0f9d8c;">Medical history</span></div>
+      <h2 class="s" style="font-size:34px;font-weight:400;color:#0d2137;margin-bottom:8px;line-height:1.1;">Do you have any known allergies?</h2>
+      <p style="font-size:14px;color:#7a9bb0;margin-bottom:24px;line-height:1.6;">Include drug allergies, food allergies, or reactions to any compounds or supplements.</p>
+      <div style="display:flex;gap:10px;margin-bottom:20px;">
+        <button class="yn-btn" id="allergy-yes" onclick="toggleYN('allergy','yes')">Yes</button>
+        <button class="yn-btn" id="allergy-no" onclick="toggleYN('allergy','no')">No</button>
+      </div>
+      <div id="allergy-detail" style="display:none;">
+        <label style="font-size:12px;font-weight:600;color:#3d5a73;margin-bottom:6px;display:block;">Please describe your allergies</label>
+        <textarea class="text-input" id="allergy-list" placeholder="e.g. Penicillin — severe reaction, shellfish allergy..." oninput="checkYNDetail('allergy')"></textarea>
+      </div>
+      <div style="margin-top:28px;display:flex;justify-content:space-between;">
+        <button class="btn-ghost" onclick="goTo2(5)">← Back</button>
+        <button class="btn-primary" id="q2-6-next" disabled onclick="goTo2(7)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q7: Specific injury / condition detail -->
+  <div class="step" id="s2-7">
+    <div class="step-card">
+      <div style="margin-bottom:8px;"><span style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0f9d8c;">Your goals</span></div>
+      <h2 class="s" style="font-size:34px;font-weight:400;color:#0d2137;margin-bottom:8px;line-height:1.1;">Tell us more about your primary concern.</h2>
+      <p style="font-size:14px;color:#7a9bb0;margin-bottom:24px;line-height:1.6;">The more detail you provide, the better your physician can tailor your protocol. Include duration, severity, and anything you've already tried.</p>
+      <textarea class="text-input" id="primary-concern" rows="5" placeholder="e.g. I've had a left shoulder rotator cuff issue for about 8 months. I've tried physio for 3 months with limited improvement. Pain is a 4/10 at rest and 7/10 during overhead movements. I train 4x per week and it's limiting my pressing movements significantly..." oninput="checkTextareaQ('primary-concern','q2-7-next')"></textarea>
+      <p style="font-size:12px;color:#7a9bb0;margin-top:10px;line-height:1.6;">Minimum 20 characters. Your physician reads this before your consultation.</p>
+      <div style="margin-top:28px;display:flex;justify-content:space-between;">
+        <button class="btn-ghost" onclick="goTo2(6)">← Back</button>
+        <button class="btn-primary" id="q2-7-next" disabled onclick="goTo2(8)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q8: Previous treatments -->
+  <div class="step" id="s2-8">
+    <div class="step-card">
+      <div style="margin-bottom:8px;"><span style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0f9d8c;">Treatment history</span></div>
+      <h2 class="s" style="font-size:34px;font-weight:400;color:#0d2137;margin-bottom:8px;line-height:1.1;">What have you already tried?</h2>
+      <p style="font-size:14px;color:#7a9bb0;margin-bottom:24px;line-height:1.6;">Select all treatments you've used for your current concern.</p>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px;">
+        <button class="multi-btn" onclick="toggleMulti(this,'physio')"><div class="check-sq"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:14px;font-weight:500;color:#0d2137;">Physiotherapy or rehab</span></button>
+        <button class="multi-btn" onclick="toggleMulti(this,'painkillers')"><div class="check-sq"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:14px;font-weight:500;color:#0d2137;">Pain medication (NSAIDs, corticosteroids)</span></button>
+        <button class="multi-btn" onclick="toggleMulti(this,'surgery')"><div class="check-sq"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:14px;font-weight:500;color:#0d2137;">Surgery or invasive procedure</span></button>
+        <button class="multi-btn" onclick="toggleMulti(this,'supplements')"><div class="check-sq"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:14px;font-weight:500;color:#0d2137;">Supplements (collagen, creatine, etc.)</span></button>
+        <button class="multi-btn" onclick="toggleMulti(this,'other-peptides')"><div class="check-sq"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:14px;font-weight:500;color:#0d2137;">Other peptides or hormones</span></button>
+        <button class="multi-btn" onclick="toggleMulti(this,'nothing')"><div class="check-sq"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:14px;font-weight:500;color:#0d2137;">Nothing yet</span></button>
+      </div>
+      <div style="margin-top:4px;display:flex;justify-content:space-between;">
+        <button class="btn-ghost" onclick="goTo2(7)">← Back</button>
+        <button class="btn-primary" id="q2-8-next" disabled onclick="goTo2(9)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q9: Administration comfort -->
+  <div class="step" id="s2-9">
+    <div class="step-card">
+      <div style="margin-bottom:8px;"><span style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0f9d8c;">Administration</span></div>
+      <h2 class="s" style="font-size:34px;font-weight:400;color:#0d2137;margin-bottom:8px;line-height:1.1;">How do you feel about self-injecting?</h2>
+      <p style="font-size:14px;color:#7a9bb0;margin-bottom:24px;line-height:1.6;">Most Pepvori protocols involve small subcutaneous injections — similar to an insulin shot. Your physician will walk you through technique during your consultation.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;" id="injection-options">
+        <button class="option-btn" onclick="selectSingle('injection','comfortable',this)">
+          <div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div style="font-size:14px;font-weight:500;color:#0d2137;">Comfortable — I've done it before or I'm not worried</div></div>
+        </button>
+        <button class="option-btn" onclick="selectSingle('injection','nervous',this)">
+          <div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div style="font-size:14px;font-weight:500;color:#0d2137;">A little nervous, but willing to learn</div><div style="font-size:12px;color:#7a9bb0;margin-top:2px;">Your physician will guide you through it</div></div>
+        </button>
+        <button class="option-btn" onclick="selectSingle('injection','prefer-oral',this)">
+          <div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div style="font-size:14px;font-weight:500;color:#0d2137;">I'd strongly prefer oral or non-injectable options</div><div style="font-size:12px;color:#7a9bb0;margin-top:2px;">Your physician will factor this into your protocol</div></div>
+        </button>
+      </div>
+      <div style="margin-top:28px;display:flex;justify-content:space-between;">
+        <button class="btn-ghost" onclick="goTo2(8)">← Back</button>
+        <button class="btn-primary" id="q2-9-next" disabled onclick="goTo2(10)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q10: Consent & review -->
+  <div class="step" id="s2-10">
+    <div class="step-card">
+      <div style="margin-bottom:8px;"><span style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0f9d8c;">Almost there</span></div>
+      <h2 class="s" style="font-size:34px;font-weight:400;color:#0d2137;margin-bottom:8px;line-height:1.1;">Review & submit your intake.</h2>
+      <p style="font-size:14px;color:#7a9bb0;margin-bottom:28px;line-height:1.6;">Your intake will be reviewed by a licensed physician within 24 hours. Please confirm the following before submitting.</p>
+
+      <!-- Summary -->
+      <div style="background:#f7f9fb;border:1px solid #dde6ed;border-radius:8px;padding:20px;margin-bottom:24px;">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#7a9bb0;margin-bottom:14px;">Your intake summary</div>
+        <div style="display:flex;flex-direction:column;gap:10px;" id="summary-list">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Consent checkboxes -->
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:28px;">
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;">
+          <input type="checkbox" id="consent-1" onchange="checkConsents()" style="margin-top:2px;accent-color:#0f9d8c;width:16px;height:16px;flex-shrink:0;"/>
+          <span style="font-size:13px;color:#3d5a73;line-height:1.6;">I confirm that the information I've provided is accurate and complete to the best of my knowledge.</span>
+        </label>
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;">
+          <input type="checkbox" id="consent-2" onchange="checkConsents()" style="margin-top:2px;accent-color:#0f9d8c;width:16px;height:16px;flex-shrink:0;"/>
+          <span style="font-size:13px;color:#3d5a73;line-height:1.6;">I understand that compounded peptides are not FDA-approved finished drug products, and that all prescribing decisions are made by an independent licensed physician.</span>
+        </label>
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;">
+          <input type="checkbox" id="consent-3" onchange="checkConsents()" style="margin-top:2px;accent-color:#0f9d8c;width:16px;height:16px;flex-shrink:0;"/>
+          <span style="font-size:13px;color:#3d5a73;line-height:1.6;">I agree to Pepvori's <a href="pepvori_terms.html" target="_blank" style="color:#0f9d8c;text-decoration:underline;">Terms of Service</a>, <a href="pepvori_privacy.html" target="_blank" style="color:#0f9d8c;text-decoration:underline;">Privacy Policy</a>, and <a href="pepvori_medical_consent.html" target="_blank" style="color:#0f9d8c;text-decoration:underline;">Medical Consent</a>.</span>
+        </label>
+      </div>
+
+      <div style="margin-top:4px;display:flex;justify-content:space-between;align-items:center;">
+        <button class="btn-ghost" onclick="goTo2(9)">← Back</button>
+        <button class="btn-primary" id="q2-submit" disabled onclick="submitIntake()" style="padding:14px 36px;">Submit to physician →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIRMATION SCREEN -->
+  <div class="step" id="s2-confirm">
+    <div style="background:#fff;border-radius:12px;border:1px solid #dde6ed;padding:56px 48px;max-width:560px;width:100%;margin:0 auto;text-align:center;">
+      <div class="conf-check">
+        <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+      <h2 class="s" style="font-size:40px;font-weight:400;color:#0d2137;margin-bottom:12px;line-height:1.1;">You're all set,<br/><em style="color:#0f9d8c;" id="confirm-name">Marcus</em>.</h2>
+      <p style="font-size:15px;color:#3d5a73;line-height:1.8;margin-bottom:32px;">Your intake has been submitted. A licensed physician will review your profile and reach out to schedule your consultation within <strong>24 hours</strong>.</p>
+
+      <!-- What happens next -->
+      <div style="background:#f7f9fb;border:1px solid #dde6ed;border-radius:8px;padding:24px;margin-bottom:32px;text-align:left;">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#7a9bb0;margin-bottom:16px;">What happens next</div>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:28px;height:28px;background:#0f9d8c;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-size:11px;font-weight:700;color:#fff;">1</span></div>
+            <div><div style="font-size:13px;font-weight:600;color:#0d2137;margin-bottom:2px;">Physician reviews your intake</div><div style="font-size:12px;color:#7a9bb0;">Within 24 hours — they'll read everything you submitted</div></div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:28px;height:28px;background:#0f9d8c;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-size:11px;font-weight:700;color:#fff;">2</span></div>
+            <div><div style="font-size:13px;font-weight:600;color:#0d2137;margin-bottom:2px;">Telehealth consultation</div><div style="font-size:12px;color:#7a9bb0;">Secure video or async — your physician confirms your protocol</div></div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:28px;height:28px;background:#b3e0db;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-size:11px;font-weight:700;color:#0d2137;">3</span></div>
+            <div><div style="font-size:13px;font-weight:600;color:#0d2137;margin-bottom:2px;">Prescription fulfilled & shipped</div><div style="font-size:12px;color:#7a9bb0;">FDA-regulated pharmacy ships within 48 hours of your consult</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="pepvori_landing_page_preview.html"><button class="btn-primary" style="width:100%;padding:14px;">Return to homepage</button></a>
+        <a href="pepvori_protocols.html"><button class="btn-ghost" style="width:100%;padding:14px;">Browse all protocols</button></a>
+      </div>
+
+      <p style="font-size:12px;color:#b3c5d0;margin-top:24px;line-height:1.7;">Check your email for a confirmation. If you have any urgent questions, contact <a href="/cdn-cgi/l/email-protection#1c6f696c6c736e685c6c796c6a736e75327f7371" style="color:#0f9d8c;"><span class="__cf_email__" data-cfemail="6c1f191c1c031e182c1c091c1a031e05420f0301">[email&#160;protected]</span></a></p>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer style="background:#09192a;padding:32px 56px;">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+    <a href="pepvori_landing_page_preview.html"><div class="s" style="font-size:18px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#fff;">PEP<span style="color:#0f9d8c">VORI</span></div></a>
+    <div style="font-size:12px;color:rgba(255,255,255,.25);max-width:600px;line-height:1.7;">* Compounded medications are not FDA-approved. All care provided by independent licensed physicians.</div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// State
+const data2 = { conditions: [], treatments: [] };
+
+// Read protocol/plan from URL params (set by Phase 1)
+const params = new URLSearchParams(window.location.search);
+const selectedProtocol = params.get('protocol') || 'Recovery & Repair';
+const selectedPlan = params.get('plan') || 'Accelerate';
+const selectedPrice = params.get('price') || '249';
+
+document.getElementById('banner-protocol').textContent = selectedProtocol;
+document.getElementById('banner-plan').textContent = selectedPlan + ' — $' + selectedPrice + '/mo';
+
+// Progress
+const TOTAL = 10;
+function updateProgress2(step) {
+  const pct = Math.round((step / TOTAL) * 100);
+  document.getElementById('progress2-bar').style.width = pct + '%';
+  document.getElementById('step2-label').textContent = 'Step ' + step + ' of ' + TOTAL;
+  const remaining = Math.max(1, Math.round((TOTAL - step) * 0.4));
+  document.getElementById('step2-pct').textContent = pct + '% complete';
+}
+
+function goTo2(step) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  if (step === 'confirm') {
+    document.getElementById('s2-confirm').classList.add('active');
+    document.getElementById('intake2-header').style.display = 'none';
+  } else {
+    document.getElementById('s2-' + step).classList.add('active');
+    updateProgress2(step);
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Text input validation
+function checkTextQ(stepId, nextBtnId) {
+  const step = document.getElementById(stepId);
+  const inputs = step.querySelectorAll('input[type="text"], input[type="number"], input[type="date"]');
+  const filled = Array.from(inputs).some(i => i.value.trim().length > 0);
+  document.getElementById(nextBtnId).disabled = !filled;
+}
+
+function checkTextareaQ(inputId, nextBtnId) {
+  const val = document.getElementById(inputId).value.trim();
+  document.getElementById(nextBtnId).disabled = val.length < 20;
+}
+
+// Single select (radio-style)
+function selectSingle(group, value, btn) {
+  const parent = btn.closest('[id$="-options"]') || btn.parentElement;
+  parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  data2[group] = value;
+  // Find next button in same step-card
+  const card = btn.closest('.step-card');
+  const next = card.querySelector('[id^="q2-"][id$="-next"]');
+  if (next) next.disabled = false;
+  // Special: sex selection also needs DOB
+  if (group === 'sex') {
+    const dob = document.getElementById('dob');
+    document.getElementById('q2-2-next').disabled = !dob.value;
+  }
+}
+
+// Yes/No toggle
+function toggleYN(group, val) {
+  const yBtn = document.getElementById(group + '-yes');
+  const nBtn = document.getElementById(group + '-no');
+  yBtn.className = 'yn-btn' + (val === 'yes' ? ' selected-yes' : '');
+  nBtn.className = 'yn-btn' + (val === 'no' ? ' selected-no' : '');
+  data2[group] = val;
+  const detail = document.getElementById(group + '-detail');
+  if (detail) detail.style.display = val === 'yes' ? 'block' : 'none';
+  // Enable next if "no" selected, or if "yes" and detail filled
+  const stepMap = { meds: 'q2-4-next', allergy: 'q2-6-next' };
+  if (val === 'no') {
+    document.getElementById(stepMap[group]).disabled = false;
+  } else {
+    checkYNDetail(group);
+  }
+}
+
+function checkYNDetail(group) {
+  const stepMap = { meds: 'q2-4-next', allergy: 'q2-6-next' };
+  const inputMap = { meds: 'meds-list', allergy: 'allergy-list' };
+  const val = document.getElementById(inputMap[group]).value.trim();
+  document.getElementById(stepMap[group]).disabled = val.length < 3;
+}
+
+// Multi-select (checkboxes)
+function toggleMulti(btn, value) {
+  // "None" is exclusive
+  if (value === 'none' || value === 'nothing') {
+    const parent = btn.parentElement;
+    parent.querySelectorAll('.multi-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    const arrKey = btn.closest('.step').id === 's2-5' ? 'conditions' : 'treatments';
+    data2[arrKey] = [value];
+  } else {
+    // Deselect "none/nothing"
+    const parent = btn.parentElement;
+    const noneBtn = parent.querySelector('[onclick*="none"], [onclick*="nothing"]');
+    if (noneBtn) noneBtn.classList.remove('selected');
+    btn.classList.toggle('selected');
+    const arrKey = btn.closest('.step').id === 's2-5' ? 'conditions' : 'treatments';
+    if (btn.classList.contains('selected')) {
+      if (!data2[arrKey].includes(value)) data2[arrKey].push(value);
+    } else {
+      data2[arrKey] = data2[arrKey].filter(v => v !== value);
+    }
+  }
+  // Enable next
+  const card = btn.closest('.step-card');
+  const next = card.querySelector('[id^="q2-"][id$="-next"]');
+  if (next) {
+    const arrKey = btn.closest('.step').id === 's2-5' ? 'conditions' : 'treatments';
+    next.disabled = data2[arrKey].length === 0;
+  }
+}
+
+// Consent
+function checkConsents() {
+  const all = ['consent-1','consent-2','consent-3'].every(id => document.getElementById(id).checked);
+  document.getElementById('q2-submit').disabled = !all;
+}
+
+// Populate summary
+function populateSummary() {
+  const firstName = document.getElementById('first-name').value;
+  const lastName = document.getElementById('last-name').value;
+  const dob = document.getElementById('dob').value;
+  const concern = document.getElementById('primary-concern').value;
+
+  const items = [
+    { label: 'Name', value: firstName + ' ' + lastName },
+    { label: 'Date of birth', value: dob || '—' },
+    { label: 'Selected protocol', value: selectedProtocol },
+    { label: 'Selected plan', value: selectedPlan + ' ($' + selectedPrice + '/mo)' },
+    { label: 'Primary concern', value: concern.substring(0, 80) + (concern.length > 80 ? '...' : '') },
+    { label: 'Medications', value: data2.meds === 'no' ? 'None' : (document.getElementById('meds-list').value || '—') },
+    { label: 'Conditions', value: data2.conditions.length ? data2.conditions.join(', ') : 'None' },
+    { label: 'Admin comfort', value: data2.injection || '—' },
+  ];
+
+  document.getElementById('summary-list').innerHTML = items.map(item => `
+    <div style="display:grid;grid-template-columns:140px 1fr;gap:8px;padding:8px 0;border-bottom:1px solid #f0f4f7;">
+      <span style="font-size:12px;color:#7a9bb0;">${item.label}</span>
+      <span style="font-size:12px;color:#0d2137;font-weight:500;">${item.value}</span>
+    </div>`
+  ).join('');
+}
+
+// Override goTo2 for step 10 to populate summary
+const _origGoTo2 = goTo2;
+window.goTo2 = function(step) {
+  if (step === 10) populateSummary();
+  _origGoTo2(step);
+};
+
+// Submit
+function submitIntake() {
+  const firstName = document.getElementById('first-name').value;
+  document.getElementById('confirm-name').textContent = firstName ||

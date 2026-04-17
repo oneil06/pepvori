@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Begin Your Assessment — Pepvori</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Outfit',sans-serif;background:#f7f9fb;color:#0d2137;min-height:100vh;font-size:14px;}
+.s{font-family:'Cormorant Garamond',serif;}
+
+/* Nav */
+.nav-link{color:#3d5a73;font-size:13px;font-weight:500;letter-spacing:0.04em;text-decoration:none;position:relative;padding-bottom:2px;transition:color .2s;}
+.nav-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1.5px;background:#0f9d8c;border-radius:2px;transition:width .35s ease-in-out;}
+.nav-link:hover{color:#0d2137;}.nav-link:hover::after{width:100%;}
+.nav-btn{background:#0f9d8c;color:#fff;border:none;padding:9px 22px;border-radius:4px;font-size:13px;font-weight:600;cursor:pointer;transition:background .4s ease-in-out,box-shadow .4s ease-in-out;}
+.nav-btn:hover{background:#0b8578;}
+
+/* Progress bar */
+.progress-track{height:3px;background:#dde6ed;border-radius:3px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,#0f9d8c,#0b8578);border-radius:3px;transition:width .5s cubic-bezier(0.4,0,0.2,1);}
+
+/* Option buttons */
+.option-btn{width:100%;text-align:left;background:#fff;border:1.5px solid #dde6ed;border-radius:8px;padding:16px 20px;cursor:pointer;transition:all .3s ease-in-out;display:flex;align-items:center;gap:14px;font-family:'Outfit',sans-serif;}
+.option-btn:hover{border-color:#0f9d8c;background:#f0faf9;}
+.option-btn.selected{border-color:#0f9d8c;background:#e6f5f3;}
+.option-btn .check{width:20px;height:20px;border-radius:50%;border:1.5px solid #dde6ed;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .3s ease-in-out;}
+.option-btn.selected .check{background:#0f9d8c;border-color:#0f9d8c;}
+.option-btn .icon-wrap{width:40px;height:40px;background:#f7f9fb;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .3s;}
+.option-btn.selected .icon-wrap{background:#e6f5f3;}
+.option-btn .label{font-size:15px;font-weight:500;color:#0d2137;margin-bottom:2px;}
+.option-btn .sublabel{font-size:12px;color:#7a9bb0;}
+
+/* CTA buttons */
+.btn-primary{background:#0f9d8c;color:#fff;border:none;padding:14px 32px;border-radius:4px;font-size:14px;font-weight:600;cursor:pointer;transition:background .4s ease-in-out,box-shadow .4s ease-in-out;font-family:'Outfit',sans-serif;}
+.btn-primary:hover{background:#0b8578;}
+.btn-primary:disabled{background:#b3e0db;cursor:not-allowed;box-shadow:none;}
+.btn-ghost{background:transparent;color:#7a9bb0;border:1.5px solid #dde6ed;padding:14px 32px;border-radius:4px;font-size:14px;font-weight:500;cursor:pointer;transition:all .3s ease-in-out;font-family:'Outfit',sans-serif;}
+.btn-ghost:hover{border-color:#0d2137;color:#0d2137;}
+
+/* Step card */
+.step-card{background:#fff;border-radius:12px;border:1px solid #dde6ed;padding:48px;max-width:640px;width:100%;margin:0 auto;}
+
+/* Slide transitions */
+.step{display:none;animation:slideIn .4s ease both;}
+.step.active{display:block;}
+@keyframes slideIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideOut{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-12px)}}
+
+/* Result card */
+.result-card{background:#fff;border-radius:12px;border:1px solid #dde6ed;max-width:780px;width:100%;margin:0 auto;overflow:hidden;}
+.plan-card{border:1.5px solid #dde6ed;border-radius:8px;padding:20px;cursor:pointer;transition:all .3s ease-in-out;background:#fff;}
+.plan-card:hover{border-color:#0f9d8c;box-shadow:0 4px 16px rgba(15,157,140,.1);}
+.plan-card.featured{border-color:#0d2137;background:#0d2137;}
+.plan-card.recommended{border-color:#0f9d8c;background:#e6f5f3;}
+
+a{text-decoration:none;}
+
+/* Footer link hover effects */
+footer a{transition:color .25s ease;}
+footer a:hover{color:rgba(255,255,255,.9)!important;}
+</style>
+<style>
+/* ── PEPVORI MOBILE NAV ── */
+.hamburger{display:none;}
+.nav-links{display:none;}
+@media(max-width:768px){
+  nav{padding:0 20px!important;}
+  .nav-links-desktop{display:none!important;}
+  .nav-links{display:none;position:fixed;top:64px;left:0;right:0;bottom:0;background:#fff;flex-direction:column;gap:0;padding:24px 0;z-index:9999;overflow-y:auto;}
+  .nav-links.open{display:flex!important;flex-direction:column!important;}
+  .nav-links a,.nav-links button{color:#0d2137!important;width:100%;text-align:left;padding:16px 24px!important;font-size:15px!important;border-radius:0!important;border-bottom:1px solid #f0f4f7;box-sizing:border-box;}
+  .nav-links .nav-btn{background:none!important;color:#0d2137!important;font-weight:600!important;border-bottom:1px solid #f0f4f7;}
+  .hamburger{display:flex!important;flex-direction:column;justify-content:center;gap:5px;}
+  /* INTAKE PAGE */
+  .intake-stats-bar{grid-template-columns:repeat(2,1fr)!important;padding:20px!important;}
+  .intake-stats-bar > div{border-right:none!important;border-bottom:1px solid #dde6ed;padding:12px 0!important;}
+  .intake-plan-cards{grid-template-columns:1fr!important;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav style="height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 56px;background:rgba(255,255,255,.97);border-bottom:1px solid #dde6ed;">
+  <a href="pepvori_landing_page_preview.html">
+    <span class="s" style="font-size:22px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#0d2137;">PEP<span style="color:#0f9d8c">VORI</span></span>
+  </a>
+  <div class="nav-links-desktop" style="display:flex;gap:28px;align-items:center;">
+    <a href="pepvori_protocols.html" class="nav-link">Protocols</a>
+    <a href="pepvori_how_it_works.html" class="nav-link">How It Works</a>
+    <a href="pepvori_pricing.html" class="nav-link">Pricing</a>
+    <button class="nav-btn">Sign In</button>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu" style="flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;">
+    <span id="hb1" style="display:block;width:22px;height:2px;background:#0d2137;border-radius:2px;transition:all .3s;"></span>
+    <span id="hb2" style="display:block;width:22px;height:2px;background:#0d2137;border-radius:2px;transition:all .3s;"></span>
+    <span id="hb3" style="display:block;width:22px;height:2px;background:#0d2137;border-radius:2px;transition:all .3s;"></span>
+  </button>
+</nav>
+<!-- Mobile nav drawer -->
+<div class="nav-links" id="mobileMenu">
+  <a href="pepvori_protocols.html" class="nav-link">Protocols</a>
+  <a href="pepvori_how_it_works.html" class="nav-link">How It Works</a>
+  <a href="pepvori_pricing.html" class="nav-link">Pricing</a>
+  <a href="pepvori_about.html" class="nav-link">About</a>
+  <a href="pepvori_contact.html" class="nav-link">Contact</a>
+  <button class="nav-btn" onclick="window.location.href='pepvori_intake.html';toggleMenu()">Begin Intake</button>
+</div>
+
+<!-- MAIN CONTENT -->
+<div style="min-height:calc(100vh - 64px);padding:48px 24px 80px;display:flex;flex-direction:column;align-items:center;">
+
+  <!-- Header + progress -->
+  <div style="max-width:640px;width:100%;margin-bottom:32px;" id="intake-header">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+      <div style="font-size:12px;font-weight:600;color:#0f9d8c;letter-spacing:0.08em;text-transform:uppercase;" id="step-label">Question 1 of 5</div>
+      <div style="font-size:12px;color:#7a9bb0;" id="step-pct">20%</div>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-bar" style="width:20%;"></div>
+    </div>
+  </div>
+
+  <!-- STEP 1: Primary goal -->
+  <div class="step active" id="step-1">
+    <div class="step-card">
+      <div style="margin-bottom:8px;">
+        <span style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0f9d8c;">Your goal</span>
+      </div>
+      <h2 class="s" style="font-size:36px;font-weight:400;color:#0d2137;margin-bottom:8px;line-height:1.1;">What's your primary goal?</h2>
+      <p style="font-size:14px;color:#7a9bb0;margin-bottom:28px;line-height:1.6;">Select the one that matters most right now. You can always layer protocols later.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;" id="q1-options">
+        <button class="option-btn" onclick="selectOption('q1','recovery',this)">
+          <div class="icon-wrap"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <div style="flex:1;"><div class="label">Recovery & healing</div><div class="sublabel">Injury recovery, chronic pain, inflammation</div></div>
+          <div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+        <button class="option-btn" onclick="selectOption('q1','performance',this)">
+          <div class="icon-wrap"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg></div>
+          <div style="flex:1;"><div class="label">Performance & muscle</div><div class="sublabel">Strength, body composition, training output</div></div>
+          <div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+        <button class="option-btn" onclick="selectOption('q1','longevity',this)">
+          <div class="icon-wrap"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <div style="flex:1;"><div class="label">Longevity & vitality</div><div class="sublabel">Energy, hormonal health, aging well</div></div>
+          <div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+        <button class="option-btn" onclick="selectOption('q1','sleep',this)">
+          <div class="icon-wrap"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg></div>
+          <div style="flex:1;"><div class="label">Sleep & cognitive focus</div><div class="sublabel">Deep sleep, mental clarity, brain fog</div></div>
+          <div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+      </div>
+      <div style="margin-top:28px;display:flex;justify-content:flex-end;">
+        <button class="btn-primary" id="q1-next" disabled onclick="goNext(2)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: Biggest challenge -->
+  <div class="step" id="step-2">
+    <div class="step-card">
+      <div style="margin-bottom:8px;">
+        <span style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0f9d8c;">Your challenge</span>
+      </div>
+      <h2 class="s" style="font-size:36px;font-weight:400;color:#0d2137;margin-bottom:8px;line-height:1.1;">What's your biggest challenge right now?</h2>
+      <p style="font-size:14px;color:#7a9bb0;margin-bottom:28px;line-height:1.6;">This helps your physician understand the most urgent area to address.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;" id="q2-options">
+        <button class="option-btn" onclick="selectOption('q2','injury',this)">
+          <div class="icon-wrap"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg></div>
+          <div style="flex:1;"><div class="label">A specific injury that won't heal</div><div class="sublabel">Tendon, ligament, joint, or muscle issue</div></div>
+          <div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+        <button class="option-btn" onclick="selectOption('q2','energy',this)">
+          <div class="icon-wrap"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg></div>
+          <div style="flex:1;"><div class="label">Low energy or declining vitality</div><div class="sublabel">Fatigue, motivation, drive</div></div>
+          <div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+        <button class="option-btn" onclick="selectOption('q2','body',this)">
+          <div class="icon-wrap"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg></div>
+          <div style="flex:1;"><div class="label">Body composition changes</div><div class="sublabel">Gaining fat, losing muscle, sluggish metabolism</div></div>
+          <div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+        <button class="option-btn" onclick="selectOption('q2','sleep',this)">
+          <div class="icon-wrap"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg></div>
+          <div style="flex:1;"><div class="label">Poor sleep or mental fog</div><div class="sublabel">Not recovering, can't focus, brain fog</div></div>
+          <div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+        <button class="option-btn" onclick="selectOption('q2','aging',this)">
+          <div class="icon-wrap"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <div style="flex:1;"><div class="label">General signs of aging</div><div class="sublabel">Feeling older than I should, slower recovery</div></div>
+          <div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+      </div>
+      <div style="margin-top:28px;display:flex;justify-content:space-between;align-items:center;">
+        <button class="btn-ghost" onclick="goBack(1)">← Back</button>
+        <button class="btn-primary" id="q2-next" disabled onclick="goNext(3)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: Age range -->
+  <div class="step" id="step-3">
+    <div class="step-card">
+      <div style="margin-bottom:8px;">
+        <span style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0f9d8c;">About you</span>
+      </div>
+      <h2 class="s" style="font-size:36px;font-weight:400;color:#0d2137;margin-bottom:8px;line-height:1.1;">What's your age range?</h2>
+      <p style="font-size:14px;color:#7a9bb0;margin-bottom:28px;line-height:1.6;">Hormonal profiles and recovery capacity vary significantly with age. This helps personalise your recommendation.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;" id="q3-options">
+        <button class="option-btn" onclick="selectOption('q3','18-29',this)" style="flex-direction:column;align-items:flex-start;padding:20px;">
+          <div class="s" style="font-size:28px;font-weight:400;color:#0f9d8c;line-height:1;margin-bottom:6px;">18–29</div>
+          <div style="font-size:12px;color:#7a9bb0;">Peak hormonal window</div>
+          <div class="check" style="position:absolute;top:12px;right:12px;"></div>
+        </button>
+        <button class="option-btn" onclick="selectOption('q3','30-39',this)" style="flex-direction:column;align-items:flex-start;padding:20px;">
+          <div class="s" style="font-size:28px;font-weight:400;color:#0f9d8c;line-height:1;margin-bottom:6px;">30–39</div>
+          <div style="font-size:12px;color:#7a9bb0;">Early decline begins</div>
+          <div class="check" style="position:absolute;top:12px;right:12px;"></div>
+        </button>
+        <button class="option-btn" onclick="selectOption('q3','40-49',this)" style="flex-direction:column;align-items:flex-start;padding:20px;">
+          <div class="s" style="font-size:28px;font-weight:400;color:#0f9d8c;line-height:1;margin-bottom:6px;">40–49</div>
+          <div style="font-size:12px;color:#7a9bb0;">Significant GH decline</div>
+          <div class="check" style="position:absolute;top:12px;right:12px;"></div>
+        </button>
+        <button class="option-btn" onclick="selectOption('q3','50+',this)" style="flex-direction:column;align-items:flex-start;padding:20px;">
+          <div class="s" style="font-size:28px;font-weight:400;color:#0f9d8c;line-height:1;margin-bottom:6px;">50+</div>
+          <div style="font-size:12px;color:#7a9bb0;">Longevity priority</div>
+          <div class="check" style="position:absolute;top:12px;right:12px;"></div>
+        </button>
+      </div>
+      <div style="margin-top:28px;display:flex;justify-content:space-between;align-items:center;">
+        <button class="btn-ghost" onclick="goBack(2)">← Back</button>
+        <button class="btn-primary" id="q3-next" disabled onclick="goNext(4)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: Activity level -->
+  <div class="step" id="step-4">
+    <div class="step-card">
+      <div style="margin-bottom:8px;">
+        <span style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0f9d8c;">Your lifestyle</span>
+      </div>
+      <h2 class="s" style="font-size:36px;font-weight:400;color:#0d2137;margin-bottom:8px;line-height:1.1;">How active are you?</h2>
+      <p style="font-size:14px;color:#7a9bb0;margin-bottom:28px;line-height:1.6;">Your activity level affects which peptides are likely to produce the best results and how quickly.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;" id="q4-options">
+        <button class="option-btn" onclick="selectOption('q4','athlete',this)">
+          <div class="icon-wrap"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 01-.982-3.172M9.497 14.25a7.454 7.454 0 00.981-3.172M5.25 4.236c-.982.143-1.954.317-2.916.52A6.003 6.003 0 007.73 9.728M5.25 4.236V4.5c0 2.108.966 3.99 2.48 5.228M5.25 4.236V2.721C7.456 2.41 9.71 2.25 12 2.25c2.291 0 4.545.16 6.75.47v1.516M7.73 9.728a6.726 6.726 0 002.748 1.35m8.272-6.842V4.5c0 2.108-.966 3.99-2.48 5.228m2.48-5.492a46.32 46.32 0 012.916.52 6.003 6.003 0 01-5.395 4.972m0 0a6.726 6.726 0 01-2.749 1.35m0 0a6.772 6.772 0 01-3.044 0"/></svg></div>
+          <div style="flex:1;"><div class="label">Competitive athlete</div><div class="sublabel">Training 5+ days a week, sport-specific goals</div></div>
+          <div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+        <button class="option-btn" onclick="selectOption('q4','active',this)">
+          <div class="icon-wrap"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z"/></svg></div>
+          <div style="flex:1;"><div class="label">Regularly active</div><div class="sublabel">Gym, sport, or cardio 3–4 times a week</div></div>
+          <div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+        <button class="option-btn" onclick="selectOption('q4','moderate',this)">
+          <div class="icon-wrap"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg></div>
+          <div style="flex:1;"><div class="label">Moderately active</div><div class="sublabel">Walking, light exercise, occasional gym</div></div>
+          <div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+        <button class="option-btn" onclick="selectOption('q4','sedentary',this)">
+          <div class="icon-wrap"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z"/></svg></div>
+          <div style="flex:1;"><div class="label">Mostly sedentary</div><div class="sublabel">Desk-based, limited regular exercise</div></div>
+          <div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+      </div>
+      <div style="margin-top:28px;display:flex;justify-content:space-between;align-items:center;">
+        <button class="btn-ghost" onclick="goBack(3)">← Back</button>
+        <button class="btn-primary" id="q4-next" disabled onclick="goNext(5)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: Previous experience -->
+  <div class="step" id="step-5">
+    <div class="step-card">
+      <div style="margin-bottom:8px;">
+        <span style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0f9d8c;">Your experience</span>
+      </div>
+      <h2 class="s" style="font-size:36px;font-weight:400;color:#0d2137;margin-bottom:8px;line-height:1.1;">Have you tried peptide therapy before?</h2>
+      <p style="font-size:14px;color:#7a9bb0;margin-bottom:28px;line-height:1.6;">This helps your physician calibrate dosing and set the right expectations for your protocol.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;" id="q5-options">
+        <button class="option-btn" onclick="selectOption('q5','no',this)">
+          <div class="icon-wrap"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"/></svg></div>
+          <div style="flex:1;"><div class="label">No, this is new to me</div><div class="sublabel">I've heard about peptides but never tried them</div></div>
+          <div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+        <button class="option-btn" onclick="selectOption('q5','researched',this)">
+          <div class="icon-wrap"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg></div>
+          <div style="flex:1;"><div class="label">I've researched them extensively</div><div class="sublabel">I know what I want, just need the prescription</div></div>
+          <div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+        <button class="option-btn" onclick="selectOption('q5','tried',this)">
+          <div class="icon-wrap"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#0f9d8c" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <div style="flex:1;"><div class="label">Yes, I've used peptides before</div><div class="sublabel">I have prior experience with one or more peptides</div></div>
+          <div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+      </div>
+      <div style="margin-top:28px;display:flex;justify-content:space-between;align-items:center;">
+        <button class="btn-ghost" onclick="goBack(4)">← Back</button>
+        <button class="btn-primary" id="q5-next" disabled onclick="showResults()">See my recommendation →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="step" id="step-results">
+    <div class="result-card">
+
+      <!-- Recommendation header -->
+      <div style="background:#0d2137;padding:40px 48px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <div style="width:8px;height:8px;background:#0f9d8c;border-radius:50%;"></div>
+          <span style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0f9d8c;">Your personalised recommendation</span>
+        </div>
+        <h2 class="s" style="font-size:42px;font-weight:400;color:#fff;margin-bottom:10px;line-height:1.05;" id="result-title">Recovery & Repair</h2>
+        <p style="font-size:15px;color:rgba(255,255,255,.55);font-weight:300;line-height:1.7;max-width:480px;" id="result-desc">Based on your responses, the Recovery & Repair protocol is the strongest match for your goals and biology.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;" id="result-pills"></div>
+      </div>
+
+      <!-- Match reasoning -->
+      <div style="padding:36px 48px;border-bottom:1px solid #dde6ed;">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0f9d8c;margin-bottom:16px;">Why this protocol fits you</div>
+        <div style="display:flex;flex-direction:column;gap:12px;" id="result-reasons"></div>
+      </div>
+
+      <!-- Quick stats -->
+      <div class="intake-stats-bar" style="padding:28px 48px;border-bottom:1px solid #dde6ed;display:grid;grid-template-columns:repeat(4,1fr);gap:0;">
+        <div style="text-align:center;padding:0 16px;border-right:1px solid #dde6ed;">
+          <div style="font-size:11px;color:#7a9bb0;margin-bottom:4px;">Results timeline</div>
+          <div style="font-size:15px;font-weight:700;color:#0d2137;" id="result-timeline">2–4 weeks</div>
+        </div>
+        <div style="text-align:center;padding:0 16px;border-right:1px solid #dde6ed;">
+          <div style="font-size:11px;color:#7a9bb0;margin-bottom:4px;">Starting from</div>
+          <div style="font-size:15px;font-weight:700;color:#0f9d8c;" id="result-price">$149/mo</div>
+        </div>
+        <div style="text-align:center;padding:0 16px;border-right:1px solid #dde6ed;">
+          <div style="font-size:11px;color:#7a9bb0;margin-bottom:4px;">Administration</div>
+          <div style="font-size:15px;font-weight:700;color:#0d2137;" id="result-admin">Subcutaneous</div>
+        </div>
+        <div style="text-align:center;padding:0 16px;">
+          <div style="font-size:11px;color:#7a9bb0;margin-bottom:4px;">Physician review</div>
+          <div style="font-size:15px;font-weight:700;color:#0d2137;">Within 24 hrs</div>
+        </div>
+      </div>
+
+      <!-- Plan selection -->
+      <div style="padding:36px 48px;border-bottom:1px solid #dde6ed;">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0f9d8c;margin-bottom:6px;">Choose your plan</div>
+        <p style="font-size:13px;color:#7a9bb0;margin-bottom:20px;">All plans include physician consultation, prescription, and monthly fulfilment.</p>
+        <div class="intake-plan-cards" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;" id="plan-cards">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- CTAs -->
+      <div style="padding:32px 48px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+        <div>
+          <div style="font-size:14px;font-weight:600;color:#0d2137;margin-bottom:3px;">Ready to begin?</div>
+          <div style="font-size:13px;color:#7a9bb0;">Select a plan above, then complete your clinical intake. A physician will review your profile within 24 hours.</div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn-ghost" style="padding:12px 22px;font-size:13px;" onclick="restartIntake()">← Start over</button>
+          <a id="result-protocol-link" href="pepvori_protocol_recovery.html"><button class="btn-primary" style="padding:12px 22px;font-size:13px;background:transparent;color:#0f9d8c;border:1.5px solid #0f9d8c;">View protocol →</button></a>
+          <button class="btn-primary" style="padding:12px 22px;font-size:13px;" onclick="beginClinicalIntake()">Begin clinical intake →</button>
+        </div>
+      </div>
+
+      <!-- Physician note -->
+      <div style="padding:20px 48px;background:#f7f9fb;border-top:1px solid #dde6ed;">
+        <p style="font-size:12px;color:#7a9bb0;line-height:1.7;"><strong style="color:#0d2137;">Note:</strong> This is a protocol recommendation based on your self-reported goals — not a medical diagnosis. A licensed physician will review your complete health profile before prescribing anything. Your physician may recommend a different or modified protocol based on your clinical assessment.</p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer style="background:#09192a;padding:40px 56px;">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+    <a href="pepvori_landing_page_preview.html"><div class="s" style="font-size:18px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#fff;">PEP<span style="color:#0f9d8c">VORI</span></div></a>
+    <div style="font-size:12px;color:rgba(255,255,255,.25);max-width:600px;line-height:1.7;">* Compounded medications are not FDA-approved. Prescriptions issued only after consultation with an independent licensed physician. Results may vary.</div>
+  </div>
+</footer>
+
+<script>
+// Answer state
+const answers = {};
+
+// Protocol definitions
+const PROTOCOLS = {
+  recovery: {
+    title: 'Recovery & Repair',
+    desc: 'Based on your responses, the Recovery & Repair protocol is the strongest match for your goals and biology.',
+    pills: ['BPC-157', 'TB-500', 'GHK-Cu'],
+    timeline: '2–4 weeks',
+    price: '$149/mo',
+    admin: 'Subcutaneous',
+    link: 'pepvori_protocol_recovery.html',
+    reasons: [
+      { icon: '✓', text: 'Your primary goal aligns with tissue healing and repair' },
+      { icon: '✓', text: 'BPC-157 and TB-500 are the most clinically studied peptides for your challenge' },
+      { icon: '✓', text: 'Results typically visible within 2–4 weeks — one of the fastest-acting protocols' },
+    ]
+  },
+  performance: {
+    title: 'Growth & Strength',
+    desc: 'Based on your responses, the Growth & Strength protocol is the strongest match for your goals and biology.',
+    pills: ['CJC-1295', 'Ipamorelin'],
+    timeline: '4–8 weeks',
+    price: '$199/mo',
+    admin: 'Subcutaneous',
+    link: 'pepvori_protocol_growth.html',
+    reasons: [
+      { icon: '✓', text: 'Your goal centres on body composition and physical performance' },
+      { icon: '✓', text: 'CJC-1295 + Ipamorelin produces synergistic GH release for lean mass and fat loss' },
+      { icon: '✓', text: 'Particularly effective for your activity level and training demands' },
+    ]
+  },
+  longevity: {
+    title: 'Longevity Protocol',
+    desc: 'Based on your responses, the Longevity Protocol is the strongest match for your goals and biology.',
+    pills: ['Sermorelin', 'Tesamorelin'],
+    timeline: '6–12 weeks',
+    price: '$249/mo',
+    admin: 'Subcutaneous',
+    link: 'pepvori_protocol_longevity.html',
+    reasons: [
+      { icon: '✓', text: 'Your responses point to age-related hormonal decline and vitality goals' },
+      { icon: '✓', text: 'Sermorelin and Tesamorelin restore GH in a physiological, sustainable way' },
+      { icon: '✓', text: 'Strong evidence base for visceral fat reduction and energy restoration at your age range' },
+    ]
+  },
+  sleep: {
+    title: 'Focus & Sleep',
+    desc: 'Based on your responses, the Focus & Sleep protocol is the strongest match for your goals and biology.',
+    pills: ['MK-677', 'Selank'],
+    timeline: '2–3 weeks',
+    price: '$179/mo',
+    admin: 'Oral / Spray',
+    link: 'pepvori_protocol_sleep.html',
+    reasons: [
+      { icon: '✓', text: 'Your responses indicate cognitive fatigue and sleep quality as primary concerns' },
+      { icon: '✓', text: 'MK-677 dramatically improves slow-wave sleep within 1–2 weeks' },
+      { icon: '✓', text: 'Selank\'s effects on focus and clarity are often noticeable within days — fastest onset of any protocol' },
+    ]
+  }
+};
+
+const PLANS = [
+  { name: 'Foundation', tier: 'Starter', price: '149', period: '1 protocol', featured: false },
+  { name: 'Accelerate', tier: 'Performance', price: '249', period: '2 protocols', featured: true },
+  { name: 'Optimize', tier: 'Elite', price: '399', period: 'Full stack', featured: false },
+];
+
+// Scoring map
+function getRecommendation() {
+  const goal = answers.q1;
+  const challenge = answers.q2;
+  const age = answers.q3;
+  const activity = answers.q4;
+
+  // Direct goal mapping takes priority
+  if (goal === 'recovery' || challenge === 'injury') return 'recovery';
+  if (goal === 'performance' || challenge === 'body') return 'performance';
+  if (goal === 'sleep' || challenge === 'sleep') return 'sleep';
+
+  // Age-weighted longevity
+  if (goal === 'longevity' || challenge === 'aging' || challenge === 'energy') {
+    if (age === '40-49' || age === '50+') return 'longevity';
+    if (age === '30-39') return 'performance';
+    return 'longevity';
+  }
+
+  return 'recovery'; // default
+}
+
+function selectOption(question, value, btn) {
+  // Deselect all in this group
+  const group = document.getElementById(question + '-options');
+  group.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  // Select this one
+  btn.classList.add('selected');
+  answers[question] = value;
+  // Enable next button
+  const nextBtn = document.getElementById(question + '-next');
+  if (nextBtn) nextBtn.disabled = false;
+}
+
+function goNext(step) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step-' + step).classList.add('active');
+  updateProgress(step);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goBack(step) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step-' + step).classList.add('active');
+  updateProgress(step);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateProgress(step) {
+  const pct = Math.round((step / 5) * 100);
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('step-label').textContent = 'Question ' + step + ' of 5';
+  document.getElementById('step-pct').textContent = pct + '%';
+}
+
+function showResults() {
+  const rec = getRecommendation();
+  const proto = PROTOCOLS[rec];
+
+  // Hide progress header
+  document.getElementById('intake-header').style.display = 'none';
+
+  // Populate result
+  document.getElementById('result-title').textContent = proto.title;
+  document.getElementById('result-desc').textContent = proto.desc;
+  document.getElementById('result-timeline').textContent = proto.timeline;
+  document.getElementById('result-price').textContent = proto.price;
+  document.getElementById('result-admin').textContent = proto.admin;
+  document.getElementById('result-protocol-link').href = proto.link;
+
+  // Pills
+  const pillsEl = document.getElementById('result-pills');
+  pillsEl.innerHTML = proto.pills.map(p =>
+    `<span style="background:rgba(15,157,140,.15);border:1px solid rgba(15,157,140,.3);border-radius:100px;padding:4px 14px;font-size:12px;color:#b3e0db;font-weight:500;">${p}</span>`
+  ).join('');
+
+  // Reasons
+  const reasonsEl = document.getElementById('result-reasons');
+  reasonsEl.innerHTML = proto.reasons.map(r =>
+    `<div style="display:flex;align-items:flex-start;gap:12px;">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:1px;"><circle cx="8" cy="8" r="8" fill="#e6f5f3"/><path d="M4.5 8l2.5 2.5 4.5-5" stroke="#0f9d8c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span style="font-size:14px;color:#3d5a73;line-height:1.6;">${r.text}</span>
+    </div>`
+  ).join('');
+
+  // Plan cards
+  const plansEl = document.getElementById('plan-cards');
+  // Auto-select the plan that matches the recommended protocol price
+  const recPrice = proto.price.replace('$','').replace('/mo','');
+  const autoSelectPlan = PLANS.find(p => p.price === recPrice) || PLANS[1];
+
+  plansEl.innerHTML = PLANS.map(plan => {
+    const isFeat = plan.featured;
+    const isRecommended = plan.price === recPrice;
+    return `<div class="plan-card ${isFeat ? 'featured' : ''} ${isRecommended ? 'recommended-highlight' : ''}" id="plan-${plan.name}" onclick="selectPlan(this, '${plan.name}')">
+      ${isRecommended ? '<div style="font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#0f9d8c;margin-bottom:8px;">Recommended for you</div>' : (isFeat ? '<div style="font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#0f9d8c;margin-bottom:8px;">Most Popular</div>' : '<div style="margin-bottom:8px;height:17px;"></div>')}
+      <div style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:${isFeat ? 'rgba(255,255,255,.35)' : '#7a9bb0'};margin-bottom:4px;">${plan.tier}</div>
+      <div class="s" style="font-size:20px;font-weight:500;color:${isFeat ? '#fff' : '#0d2137'};margin-bottom:8px;">${plan.name}</div>
+      <div class="s" style="font-size:28px;font-weight:400;color:${isFeat ? '#b3e0db' : '#0f9d8c'};line-height:1;margin-bottom:4px;"><sup style="font-size:13px;vertical-align:super;">$</sup>${plan.price}</div>
+      <div style="font-size:11px;color:${isFeat ? 'rgba(255,255,255,.3)' : '#7a9bb0'};margin-bottom:14px;">per month</div>
+      <div style="font-size:12px;color:${isFeat ? 'rgba(255,255,255,.45)' : '#3d5a73'};">${plan.period}</div>
+    </div>`;
+  }).join('');
+
+  // Auto-highlight the recommended plan
+  setTimeout(() => {
+    const autoEl = document.getElementById('plan-' + autoSelectPlan.name);
+    if (autoEl) selectPlan(autoEl, autoSelectPlan.name);
+  }, 50);
+
+  // Show results
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step-results').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function selectPlan(el, name) {
+  document.querySelectorAll('.plan-card').forEach(c => {
+    c.style.outline = 'none';
+    c.style.boxShadow = '';
+  });
+  el.style.outline = '2px solid #0f9d8c';
+  el.style.boxShadow = '0 0 0 5px rgba(15,157,140,.15)';
+}
+
+function restartIntake() {
+  Object.keys(answers).forEach(k => delete answers[k]);
+  document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.btn-primary[id$="-next"]').forEach(b => b.disabled = true);
+  document.getElementById('intake-header').style.display = 'block';
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step-1').classList.add('active');
+  updateProgress(1);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function beginClinicalIntake() {
+  const rec = getRecommendation();
+  const proto = PROTOCOLS[rec];
+  // Find selected plan
+  const selectedPlanEl = document.querySelector('.plan-card[style*="outline"]');
+  let planName = 'Accelerate';
+  let planPrice = '249';
+  if (selectedPlanEl) {
+    const nameEl = selectedPlanEl.querySelector('.s');
+    if (nameEl) planName = nameEl.textContent.trim();
+    const priceEl = selectedPlanEl.querySelector('span[id^=""]');
+    // Get price from plan card content
+    const match = selectedPlanEl.innerHTML.match(/>(\d+)<\/span>/);
+    if (match) planPrice = match[1];
+  }
+  const params = new URLSearchParams({
+    protocol: proto.title,
+    plan: planName,
+    price: planPrice,
+  });
+  window.location.href = 'pepvori_intake2.html?' + params.toString();
+}
+</script>
+<script>
+function toggleMenu(){
+  const links = document.querySelector('.nav-links');
+  const h1 = document.getElementById('hb1');
+  const h2 = document.getElementById('hb2');
+  const h3 = document.getElementById('hb3');
+  const open = links.classList.toggle('open');
+  h2.style.opacity = open ? '0' : '1';
+  h1.style.transform = open ? 'translateY(7px) rotate(45deg)' : '';
+  h3.style.transform = open ? 'translateY(-7px) rotate(-45deg)' : '';
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+document.querySelectorAll('.nav-links a, .nav-links button').forEach(el => {
+  el.addEventListener('click', () => {
+    document.querySelector('.nav-links').classList.remove('open');
+    document.body.style.overflow = '';
+  });
+});
+</script>
+</body>
+</html>

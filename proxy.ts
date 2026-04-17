@@ -1,34 +1,10 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
-// All public (non-protected) routes
-const isPublicRoute = createRouteMatcher([
-  '/',
-  '/about',
-  '/contact',
-  '/how-it-works',
-  '/pricing',
-  '/physicians',
-  '/protocols',
-  '/protocols/(.*)',
-  '/intake',
-  '/sign-in(.*)',
-  '/sign-up(.*)',
-  '/privacy',
-  '/terms',
-  '/medical-consent',
-  '/hipaa',
-  '/api/contact',
-])
-
-export default clerkMiddleware(async (auth, req) => {
-  // Only protect non-public routes
-  if (!isPublicRoute(req)) {
-    await auth.protect({
-      // Always redirect to our local sign-in page
-      unauthenticatedUrl: new URL('/sign-in', req.url).toString(),
-    })
-  }
-})
+// Auth middleware placeholder — Clerk removed, all routes are public for now
+export default function middleware(_req: NextRequest) {
+  return NextResponse.next()
+}
 
 export const config = {
   matcher: [
